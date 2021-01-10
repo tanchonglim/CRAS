@@ -50,10 +50,10 @@
                   </li>
                </ul>
 
-               <form class="form-inline mt-2 mt-md-0">
+               <div class="form-inline mt-2 mt-md-0">
                    <a class="btn btn-success my-2 my-sm-0"  href="login.jsp"> Login </a>&nbsp; &nbsp;
                   <a class="btn btn-outline-success my-2 my-sm-0" t href="register.jsp">Register</a>
-               </form>
+               </div>
             </div>
          </div>
       </nav> 
@@ -80,7 +80,7 @@
                            <h2>Resigtration Form</h2>
                            <p>Registration open for student only</p>
 
-                           <form>
+                           <form action="StudentRegistrationServlet" method="POST">
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
                                 <input type="email" class="form-control" id="email" name="email" required="true">
@@ -108,8 +108,8 @@
                                
                               <div class="form-group">
                                 <label for="exampleInputPassword1">Matric Number</label>
-                                <input type="text" class="form-control" id="matric" name="matricHelp" required="true">
-                                <small id="matricHelp" class="form-text text-muted">Please get this from your school if you don't have one. </small>
+                                <input type="text" class="form-control" id="matricNo" name="matricNo" required="true">
+                                <small id="matricNo" class="form-text text-muted">Please get this from your school if you don't have one. </small>
                               </div>
                               
                               

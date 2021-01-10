@@ -50,10 +50,10 @@
                   </li>
                </ul>
 
-               <form class="form-inline mt-2 mt-md-0">
+               <div class="form-inline mt-2 mt-md-0">
                    <a class="btn btn-success my-2 my-sm-0"  href="login.jsp"> Login </a>&nbsp; &nbsp;
                   <a class="btn btn-outline-success my-2 my-sm-0" t href="register.jsp">Register</a>
-               </form>
+               </div>
             </div>
          </div>
       </nav>     
@@ -66,17 +66,17 @@
                     <div class="card shadow">
                        <div class="card-body">
                           <h2>Login</h2>
-                          <form>
+                          <form method="POST" action="StudentLoginServlet" >
                              <div class="form-group">
-                               <label for="exampleInputEmail1">Email Address / Username</label>
-                               <input type="text" class="form-control" id="userlogin" >
+                               <label for="login">Email Address / Username</label>
+                               <input type="text" class="form-control" name="login" id="login" >
                              </div>
                              <div class="form-group">
-                               <label for="exampleInputPassword1">Password</label>
-                               <input type="password" class="form-control" id="password">
+                               <label for="password">Password</label>
+                               <input type="password" class="form-control" name="password" id="password">
                              </div>
                              <div class="form-group form-check">
-                               <input type="checkbox" class="form-check-input" id="keepLoggedIn">
+                               <input type="checkbox" class="form-check-input" name="keepLoggedIn" id="keepLoggedIn">
                                <label class="form-check-label" for="keepLoggedIn">Keep me logged in</label>
                              </div>
                              <button type="submit" class="btn btn-primary">Submit</button>

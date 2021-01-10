@@ -19,6 +19,18 @@ public class JDBCUtility {
     String userName;
     String password;
     
+    //user table
+    PreparedStatement psSelectUserByEmailORUsername = null;
+    
+    //student table
+    PreparedStatement psSelecttStudentByID = null;
+    
+    //user-student table
+    PreparedStatement psInsertUserStudent = null;
+    
+
+    
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -86,6 +98,72 @@ public class JDBCUtility {
 	catch (Exception ex)
 	{
 	}
+    }
+    
+    //user    
+    public void prepareSQLStatementSelectUserByEmailORUsername(){
+        
+        try {
+           
+            //create SQL statement
+            String sqlSelectUserByEmailORUsername = "SELECT * FROM user WHERE username = ? OR email = ?" ;            
+            
+            //prepare statement
+            psSelectUserByEmailORUsername = con.prepareStatement(sqlSelectUserByEmailORUsername);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getPsSelectStudentByEmailORUsername(){
+        return psSelectUserByEmailORUsername;
+    }
+    
+    //student
+    
+     public void prepareSQLStatementSelectStudentByID(){
+        
+        try {
+           
+            //create SQL statement
+            String sqlSelectStudentByID = "SELECT * FROM student WHERE studentID = ? " ;            
+            
+            //prepare statement
+            psSelecttStudentByID = con.prepareStatement(sqlSelectStudentByID);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getPsSelectStudentbyID(){
+        return psSelecttStudentByID;
+    }
+    
+ 
+    
+    //user-student
+    
+       public void prepareSQLStatementInsertUserStudent(){
+        
+        try {
+            //create SQL statement
+            String sqlInsertUserStudent = "INSERT INTO student(name, matricNo) values(?, ?); "
+                    + "SET @id = LAST_INSERT_ID(); "
+                    + "INSERT INTO user(username, email, password, salt, userType, studentID, addedDate) " 
+                    + "values(?, ?, ?, ?, ?, @id, NOW());";
+            
+            //prepare statement
+            psInsertUserStudent = con.prepareStatement(sqlInsertUserStudent);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getPsInsertUserStudent(){
+        return psInsertUserStudent;
     }
     
 }

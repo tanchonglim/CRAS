@@ -86,12 +86,15 @@ CREATE TABLE `student` (
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
   `addedDate` datetime NOT NULL,
   `userType` varchar(255) NOT NULL DEFAULT 'student',
   `studentID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `user` CHANGE `addedDate` `addedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 --
 -- Indexes for dumped tables
