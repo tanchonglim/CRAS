@@ -37,6 +37,24 @@ public class JDBCUtility {
     //update student password
     PreparedStatement psUpdateStudentPassword = null;
     
+    //college table
+    PreparedStatement psSelectAllCollege = null;
+    
+    //insert college
+    PreparedStatement psInsertCollege = null;
+    
+    //update college
+    PreparedStatement psUpdateCollege = null;
+    
+    //college room
+    PreparedStatement psSelectAllRoom = null;
+    
+    //insert room
+    PreparedStatement psInsertRoom = null;
+    
+    //update room
+    PreparedStatement psUpdateRoom = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -231,5 +249,115 @@ public class JDBCUtility {
         return psUpdateStudentPassword;
     }
     
+    public void prepareSQLStatemenSelectAllCollege(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllCollege = "SELECT * FROM college";
+            
+            //prepare statement
+            psSelectAllCollege  = con.prepareStatement(sqlSelectAllCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
     
+    public PreparedStatement getpsSelectAllCollege(){
+        return psSelectAllCollege;
+    }
+    
+    public void prepareSQLStatemenSelectAllRoom(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllCollege = "SELECT * FROM college";
+            
+            //prepare statement
+            psSelectAllCollege  = con.prepareStatement(sqlSelectAllCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectAllRoom(){
+        return psSelectAllCollege;
+    }
+    
+    public void prepareSQLStatementUpdateCollege(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateCollege = "UPDATE college SET collegeName = ?, address = ? WHERE collegeID = ?;";
+            
+            //prepare statement
+            psUpdateCollege = con.prepareStatement(sqlUpdateCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateCollege(){
+        return psUpdateCollege;
+    }
+    
+    public void prepareSQLStatementUpdateRoom(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateRoom = "UPDATE room SET roomName = ?, roomType = ?, capacity = ?, occupied = ? WHERE roomID = ?;";
+            
+            //prepare statement
+            psUpdateRoom = con.prepareStatement(sqlUpdateRoom);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateRoom(){
+        return psUpdateRoom;
+    }
+    
+    public void prepareSQLStatementInsertCollege(){
+        
+        try {
+           
+            //create SQL statement
+            String sqlInsertCollege = "INSERT INTO college(collegeName, address, addedDate)" +
+                                   " VALUES(?, ?, NOW())"; 
+            
+            //prepare statement
+            psInsertCollege = con.prepareStatement(sqlInsertCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+
+    public PreparedStatement getPsInsertCollege(){
+        return psInsertCollege;
+    }
+    
+    public void prepareSQLStatementInsertRoom(){
+        
+        try {
+           
+            //create SQL statement
+            String sqlInsertRoom = "INSERT INTO room(roomName, collegeID, addedDate, roomType, capacity, occupied)" +
+                                   " VALUES(?, ?, NOW(), ?, ?, ?)"; 
+            
+            //prepare statement
+            psInsertRoom = con.prepareStatement(sqlInsertRoom);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+
+    public PreparedStatement getPsInsertRoom(){
+        return psInsertRoom;
+    }
 }

@@ -6,6 +6,7 @@
 package shared;
 
 import bean.Student;
+import bean.College;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import jdbc.JDBCUtility;
 import bean.*;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -51,6 +53,8 @@ public class LoginServlet extends HttpServlet {
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementSelectUserByEmailORUsername();
         jdbcUtility.prepareSQLStatementSelectStudentByID();
+        //jdbcUtility.prepareSQLStatemenSelectAllCollege();
+        //jdbcUtility.prepareSQLStatemenSelectAllRoom();
     }     
     
     public void destroy() {   
@@ -134,6 +138,52 @@ public class LoginServlet extends HttpServlet {
                         //redirect to StudentHome
                         response.sendRedirect(request.getContextPath() + "/studentHome.jsp");                      
                    } else {
+                       //PreparedStatement ps3 = jdbcUtility.getpsSelectAllCollege();
+                       //ResultSet selectResult3 = ps3.executeQuery();
+                       //ArrayList collegeList = new ArrayList();
+                       //College college = null;
+                       
+                       //PreparedStatement ps4 = jdbcUtility.getpsSelectAllRoom();
+                       //ResultSet selectResult4 = ps4.executeQuery();
+                       //ArrayList roomList = new ArrayList();
+                       
+                       /*if(selectResult3.next()){
+                           int cID = selectResult3.getInt("collegeID");
+                           String cName = selectResult3.getString("collegeName");
+                           String cAddress = selectResult3.getString("address");
+                           java.sql.Date cAddedDate = selectResult3.getDate("addedDate");
+                           
+                           College college = new College();
+                           college.setCollegeID(cID);
+                           college.setCollegeName(cName);
+                           college.setAddress(cAddress);
+                           Date sqlDate2 = new Date(cAddedDate.getTime());
+                           college.setAddedDate(sqlDate2);
+                           collegeList.add(college);
+                       }/*
+                       /*if(selectResult4.next()){
+                           int rID = selectResult4.getInt("roomID");
+                           String rName = selectResult4.getString("roomName");
+                           int collegeID = selectResult4.getInt("collegeID");
+                           java.sql.Date rAddedDate = selectResult4.getDate("addedDate");
+                           String rType = selectResult4.getString("roomType");
+                           int rCapacity = selectResult4.getInt("capacity");
+                           int rOccupied = selectResult4.getInt("occupied");
+                           
+                           Room room = new Room();
+                           room.setRoomID(rID);
+                           room.setRoomName(rName);
+                           room.setCollegeID(collegeID);
+                           Date sqlDate3 = new Date(rAddedDate.getTime());
+                           room.setAddedDate(sqlDate3);
+                           room.setRoomType(rType);
+                           room.setCapacity(rCapacity);
+                           room.setOccupied(rOccupied);
+                           roomList.add(room);
+                       }*/
+                       
+                       //session.setAttribute("colleges", collegeList);
+                       //session.setAttribute("rooms", roomList);
                        response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
                    }
                    
