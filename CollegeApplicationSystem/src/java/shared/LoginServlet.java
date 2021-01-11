@@ -7,7 +7,6 @@ package shared;
 
 import bean.Student;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.text.SimpleDateFormat;  
 import jdbc.JDBCUtility;
 import bean.*;
 import javax.servlet.http.HttpSession;
@@ -103,7 +101,6 @@ public class LoginServlet extends HttpServlet {
                    user.setEmail(email);
                    user.setUserType(userType);
                    user.setStudentID(studentID);
-                   //user.setAddedDate(new SimpleDateFormat("YYYY-MM-DD HH:MM:SS").parse(addedDate));
                    Date sqlDate = new Date(addedDate.getTime());
                    user.setAddedDate(sqlDate);
                   
@@ -140,7 +137,6 @@ public class LoginServlet extends HttpServlet {
                        response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
                    }
                    
-
                } else {
                    //invalid credential
                     response.sendRedirect(request.getContextPath() + "/login.jsp?message=invalid credential");

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2021 at 07:57 AM
+-- Generation Time: Jan 11, 2021 at 04:54 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -77,6 +77,13 @@ CREATE TABLE `student` (
   `imagePath` varchar(255) NOT NULL DEFAULT 'default.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`studentID`, `name`, `matricNo`, `imagePath`) VALUES
+(1, 'james bond', 'AM1234', 'default.png');
+
 -- --------------------------------------------------------
 
 --
@@ -89,12 +96,17 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
-  `addedDate` datetime NOT NULL,
+  `addedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userType` varchar(255) NOT NULL DEFAULT 'student',
   `studentID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `user` CHANGE `addedDate` `addedDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userID`, `username`, `email`, `password`, `salt`, `addedDate`, `userType`, `studentID`) VALUES
+(1, 'admin', 'admin@admin.com', 'c61f53871cb8ca8fa7dea34340d50e14694353bd26b9e88c721ba849aaa1b9f3fec21301d8576b385a28e116a3a66c08887450719f3658640b3d43a00b995347', 'PIYTrVQjjKTmQEIUb3jLt0enNSAQb1', '2021-01-11 11:54:08', 'admin', 1);
 
 --
 -- Indexes for dumped tables
@@ -142,12 +154,12 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

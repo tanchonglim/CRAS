@@ -58,7 +58,26 @@
          </div>
       </nav>     
         <main role="main" class="container">
-            <div style='height: 8rem;'></div>
+            <div style='height: 3rem;'></div>
+            
+            <div class='row'>
+                <div class="col-md-2"> </div>
+                 <div class="col-md-8">
+                     
+                    <div class="card shadow">
+                       <div class="card-body">
+                          <h2>Demo Admin Credential</h2>
+                          <p> Login: admin </p>  
+                          <p> Password: admin </p>
+                       </div>
+                    </div>
+
+                 </div>
+                 <div class="col-md-2"></div>
+            </div>
+            
+            <div style='height: 2rem;'></div>
+            
             <div class='row'>
                 <div class="col-md-2"> </div>
                  <div class="col-md-8">
