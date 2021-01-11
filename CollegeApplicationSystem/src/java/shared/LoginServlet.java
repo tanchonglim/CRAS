@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
                 int userID = Integer.parseInt(selectResult.getString("userID"));
                 String username = selectResult.getString("username");
                 String email = selectResult.getString("email");
-                String addedDate = selectResult.getString("addedDate");
+                java.sql.Date addedDate = selectResult.getDate("addedDate");
                 int studentID = Integer.parseInt(selectResult.getString("studentID"));
                 String userType = selectResult.getString("userType");
                 String salt = selectResult.getString("salt");
@@ -103,7 +103,9 @@ public class LoginServlet extends HttpServlet {
                    user.setEmail(email);
                    user.setUserType(userType);
                    user.setStudentID(studentID);
-                   user.setAddedDate(new SimpleDateFormat("YYYY-MM-DD HH:MM:SS").parse(addedDate));
+                   //user.setAddedDate(new SimpleDateFormat("YYYY-MM-DD HH:MM:SS").parse(addedDate));
+                   Date sqlDate = new Date(addedDate.getTime());
+                   user.setAddedDate(sqlDate);
                   
                    
                    HttpSession session = request.getSession();
@@ -149,6 +151,13 @@ public class LoginServlet extends HttpServlet {
              response.sendRedirect(request.getContextPath() + "/login.jsp?message=invalid credential");
         } catch (SQLException ex) {
             //failed
+            while (ex != null) {
+                System.out.println ("SQLState: " + ex.getSQLState ());
+                System.out.println ("Message:  " + ex.getMessage ());
+		System.out.println ("Vendor:   " + ex.getErrorCode ());
+                ex = ex.getNextException ();
+		System.out.println ("");
+            }
             response.sendRedirect(request.getContextPath() + "/login.jsp?message=failed");
         } catch (Exception e){
             //failed

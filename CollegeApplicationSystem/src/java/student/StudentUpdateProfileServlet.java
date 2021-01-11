@@ -5,6 +5,8 @@
  */
 package student;
 
+import bean.Student;
+import bean.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -15,17 +17,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jdbc.JDBCUtility;
-
+import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import jdbc.JDBCUtility;
 
 /**
  *
- * @author Tan Chong Lim
+ * @author Wen Jie
  */
-@WebServlet(name = "StudentRegistrationServlet", urlPatterns = {"/StudentRegistrationServlet"})
-public class StudentRegistrationServlet extends HttpServlet {
+@WebServlet(name = "StudentUpdateProfileServlet", urlPatterns = {"/StudentUpdateProfileServlet"})
+public class StudentUpdateProfileServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -47,7 +49,8 @@ public class StudentRegistrationServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatementInsertUserStudent();
+        jdbcUtility.prepareSQLStatementUpdateStudentProfile();
+        jdbcUtility.prepareSQLStatementSelectStudentByID();
     }     
     
     public void destroy() {   
@@ -66,37 +69,41 @@ public class StudentRegistrationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //get data from form
-        String name = request.getParameter("fullName");
+       //get data from form
+        String name = request.getParameter("name");
         String matricNo = request.getParameter("matricNo");
-        String username = request.getParameter("username");
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
-       
-        String salt = RandomStringUtils.random(30, true, true); //generate salt
-        String hashedPassword = DigestUtils.sha512Hex(password + salt); //generate hashed password
-        String userType="student"; //only student can register
+        int studentID = Integer.parseInt(request.getParameter("studentID"));
         
-       
         //insert into database
         try {
-            PreparedStatement ps = jdbcUtility.getPsInsertUserStudent();
+            PreparedStatement ps = jdbcUtility.getpsUpdateStudentProfile();
             ps.setString(1, name);
             ps.setString(2, matricNo);
-            ps.setString(3, username);
+            ps.setInt(3, studentID);
             ps.setString(4, email);
-            ps.setString(5, hashedPassword);
-            ps.setString(6, salt);
-            ps.setString(7, userType);
-            
-            
-           int insertStatus = ps.executeUpdate();
+            ps.setInt(5, studentID);
           
-           if(insertStatus == 1)
-            response.sendRedirect(request.getContextPath() + "/login.jsp?message=Register Success");
+           int updateStatus = ps.executeUpdate();
+          
+           if(updateStatus == 1){
+               HttpSession session = request.getSession();
+        
+                //get user profile bean from session
+                User user = (User)session.getAttribute("user");
+                user.setEmail(email);
+                session.setAttribute("user", user);
+                
+                Student student = (Student)session.getAttribute("student");
+                student.setName(name);
+                student.setMatricNo(matricNo);
+                session.setAttribute("student", student);
+                
+                response.sendRedirect(request.getContextPath() + "/studentProfile.jsp");
+           }
+            
            else
-             response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
+             response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -106,11 +113,8 @@ public class StudentRegistrationServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
+            response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
         }
-        
-        
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

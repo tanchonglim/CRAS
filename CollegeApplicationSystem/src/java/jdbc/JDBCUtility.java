@@ -28,8 +28,14 @@ public class JDBCUtility {
     //user-student table
     PreparedStatement psInsertUserStudent = null;
     
-
+    //update student profile
+    PreparedStatement psUpdateStudentProfile = null;
     
+    //check student password
+    PreparedStatement psCheckPassword = null;
+    
+    //update student password
+    PreparedStatement psUpdateStudentPassword = null;
     
       //use this constructor if using ConnectionPool
     public JDBCUtility()
@@ -127,7 +133,7 @@ public class JDBCUtility {
         try {
            
             //create SQL statement
-            String sqlSelectStudentByID = "SELECT * FROM student WHERE studentID = ? " ;            
+            String sqlSelectStudentByID = "SELECT * FROM student JOIN user ON student.studentID = user.studentID WHERE student.studentID = ? " ;            
             
             //prepare statement
             psSelecttStudentByID = con.prepareStatement(sqlSelectStudentByID);            
@@ -165,5 +171,65 @@ public class JDBCUtility {
     public PreparedStatement getPsInsertUserStudent(){
         return psInsertUserStudent;
     }
+    
+    //update student profile
+    
+    public void prepareSQLStatementUpdateStudentProfile(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateStudentProfile = "UPDATE student SET name = ?, matricNo = ? WHERE studentID = ?;"
+                    + "UPDATE user SET email = ? WHERE studentID = ?;";
+            
+            //prepare statement
+            psUpdateStudentProfile = con.prepareStatement(sqlUpdateStudentProfile);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateStudentProfile(){
+        return psUpdateStudentProfile;
+    }
+    
+     //update student profile
+    
+    public void prepareSQLStatemenCheckPassword(){
+        
+        try {
+            //create SQL statement
+            String sqlCheckPassword = "SELECT password, salt FROM user WHERE studentID = ?;";
+            
+            //prepare statement
+            psCheckPassword  = con.prepareStatement(sqlCheckPassword);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsCheckPassword(){
+        return psCheckPassword;
+    }
+    
+    public void prepareSQLStatemenUpdateStudentPassword(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdatePassword = "UPDATE user SET password = ? WHERE studentID = ?;";
+            
+            //prepare statement
+            psUpdateStudentPassword  = con.prepareStatement(sqlUpdatePassword);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateStudentPassword(){
+        return psUpdateStudentPassword;
+    }
+    
     
 }

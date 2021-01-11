@@ -6,9 +6,9 @@
 package student;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jdbc.JDBCUtility;
-
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  *
- * @author Tan Chong Lim
+ * @author Wen Jie
  */
-@WebServlet(name = "StudentRegistrationServlet", urlPatterns = {"/StudentRegistrationServlet"})
-public class StudentRegistrationServlet extends HttpServlet {
-
+@WebServlet(name = "StudentUpdatePasswordServlet", urlPatterns = {"/StudentUpdatePasswordServlet"})
+public class StudentUpdatePasswordServlet extends HttpServlet {
+    
     private JDBCUtility jdbcUtility;
     private Connection con;
     
@@ -47,13 +45,14 @@ public class StudentRegistrationServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatementInsertUserStudent();
+        jdbcUtility.prepareSQLStatemenCheckPassword();
+        jdbcUtility.prepareSQLStatemenUpdateStudentPassword();
     }     
     
     public void destroy() {   
         jdbcUtility.jdbcConClose();
     } 
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,37 +65,38 @@ public class StudentRegistrationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //get data from form
-        String name = request.getParameter("fullName");
-        String matricNo = request.getParameter("matricNo");
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
+       //get data from form
         String password = request.getParameter("password");
-       
-        String salt = RandomStringUtils.random(30, true, true); //generate salt
-        String hashedPassword = DigestUtils.sha512Hex(password + salt); //generate hashed password
-        String userType="student"; //only student can register
+        String newPassword = request.getParameter("newPassword");
+        int studentID = Integer.parseInt(request.getParameter("studentID"));
         
-       
         //insert into database
         try {
-            PreparedStatement ps = jdbcUtility.getPsInsertUserStudent();
-            ps.setString(1, name);
-            ps.setString(2, matricNo);
-            ps.setString(3, username);
-            ps.setString(4, email);
-            ps.setString(5, hashedPassword);
-            ps.setString(6, salt);
-            ps.setString(7, userType);
-            
-            
-           int insertStatus = ps.executeUpdate();
+            PreparedStatement ps = jdbcUtility.getpsCheckPassword();
+            ps.setInt(1, studentID);
           
-           if(insertStatus == 1)
-            response.sendRedirect(request.getContextPath() + "/login.jsp?message=Register Success");
-           else
-             response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
+           ResultSet selectResult = ps.executeQuery();
+          
+           if(selectResult.next()){
+                String salt = selectResult.getString("salt");
+                String hashedPassword = selectResult.getString("password");
+                
+                if(hashedPassword.equals(DigestUtils.sha512Hex(password + salt))){
+                    PreparedStatement ps1 = jdbcUtility.getpsUpdateStudentPassword();
+                    String newHashedPassword = DigestUtils.sha512Hex(newPassword + salt);
+                    ps1.setString(1, newHashedPassword);
+                    ps1.setInt(2, studentID);
+                    
+                    int insertStatus = ps1.executeUpdate();
+          
+                    if(insertStatus == 1)
+                     response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
+                    else
+                      response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
+                }
+                else
+                    response.sendRedirect(request.getContextPath() + "/studentEditPassword.jsp?msg=WrongPassword");
+           }            
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -106,12 +106,10 @@ public class StudentRegistrationServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
+            response.sendRedirect(request.getContextPath() + "/studentEditPassword.jsp");
         }
-        
-        
-
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

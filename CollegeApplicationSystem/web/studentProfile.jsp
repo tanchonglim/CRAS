@@ -1,13 +1,18 @@
 <%-- 
-    Document   : studentHome
-    Created on : Jan 9, 2021, 5:00:12 PM
-    Author     : Tan Chong Lim
+    Document   : studentProfile
+    Created on : Jan 10, 2021, 8:09:54 PM
+    Author     : Wen Jie
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="bean.User" %>
 <%@ page import="bean.Student" %>
+
+<c:if test="${sessionScope.user == null || sessionScope.student == null }">
+    <c:redirect url="/notAuthorized.jsp" />   
+</c:if>
 
 <c:if test="${sessionScope.user == null || sessionScope.student == null }">
     <c:redirect url="/notAuthorized.jsp" />   
@@ -71,21 +76,39 @@
          </div>
       </nav>     
         <main role="main" class="container">
-            <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                   <li class="breadcrumb-item"><a href="studentHome.jsp">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Profile</li>
                </ol>
             </nav>
             
-            <div class="jumbotron">
+            <div class="card">
                <div class="container">
-                   <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /> (student) </h1>
-                  <p>
-                      Are you here for college room application? <br>
-                  </p>
-                  <p>
-                     <a class="btn btn-primary" href="#" role="button">Apply Now &raquo;</a>
-                  </p>
+                   <div class="row justify-content-md-center">
+                       <div class="col col-md-3" style="padding:20px">
+                       <img src="img/${student.imagePath}" class="rounded img-fluid">
+                       </div>
+                  </div>
+                   <dl class="row">
+                       <dt class="col-sm-6 text-right">Username</dt>
+                        <dd class="col-sm-6"><jsp:getProperty name="user" property="username" /></dd>
+                        
+                        <dt class="col-sm-6 text-right">Name</dt>
+                        <dd class="col-sm-6"><jsp:getProperty name="student" property="name" /></dd>
+
+                        <dt class="col-sm-6 text-right">Matric No.</dt>
+                        <dd class="col-sm-6"><jsp:getProperty name="student" property="matricNo" /></dd>
+
+                        <dt class="col-sm-6 text-right">Email address</dt>
+                        <dd class="col-sm-6"><jsp:getProperty name="user" property="email" /></dd>
+                        
+                        <dt class="col-sm-6 text-right">Joined Date</dt>
+                        <dd class="col-sm-6"><fmt:formatDate value="${user.addedDate}" pattern="dd-MM-yyyy" /></dd>
+                      </dl>
+                      <div class="col text-center" style='padding-bottom: 20px;'>
+                        <a class="btn btn-primary align-content-center"  href="studentEditProfile.jsp"> Edit Profile </a>
+                      </div>
                </div>
             </div>  
            
