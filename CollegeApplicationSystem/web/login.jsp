@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,7 +59,17 @@
          </div>
       </nav>     
         <main role="main" class="container">
-            <div style='height: 3rem;'></div>
+            <div style='height: 2rem;'></div>
+            
+            <c:if test="${param.message != null}"> 
+                <div class="alert alert-danger" role="alert"> ${param.message} </div>
+            </c:if>
+ 
+             <c:if test="${param.success != null}"> 
+                <div class="alert alert-success" role="alert"> ${param.success} </div>
+            </c:if>
+                
+            <div style='height: 1rem;'></div>
             
             <div class='row'>
                 <div class="col-md-2"> </div>
@@ -78,6 +89,7 @@
             
             <div style='height: 2rem;'></div>
             
+             
             <div class='row'>
                 <div class="col-md-2"> </div>
                  <div class="col-md-8">

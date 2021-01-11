@@ -4,6 +4,7 @@
     Author     : Tan Chong Lim
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -57,8 +58,12 @@
             </div>
          </div>
       </nav> 
-        <div style='height: 8rem;'></div>
+        
         <main role="main" class="container">
+            <div style='height: 4rem;'></div>
+            <c:if test="${param.message != null}"> 
+                <div class="alert alert-danger" role="alert"> ${param.message} </div>
+            </c:if>
             <div class="row">
                 <div class="col-md-5">
                     <div class="jumbotron">

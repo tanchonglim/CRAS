@@ -94,7 +94,7 @@ public class StudentRegistrationServlet extends HttpServlet {
            int insertStatus = ps.executeUpdate();
           
            if(insertStatus == 1)
-            response.sendRedirect(request.getContextPath() + "/login.jsp?message=Register Success");
+            response.sendRedirect(request.getContextPath() + "/login.jsp?success=Register Success");
            else
              response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
         } catch (SQLException ex) {
