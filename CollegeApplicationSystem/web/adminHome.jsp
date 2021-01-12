@@ -111,6 +111,7 @@
                             <th>Address</th>
                             <th>Added Date</th>
                             <th>Operation</th>
+                            <th>Room</th>
                         </tr>
                     </thead>
                     <tbody class="table-secondary text-center">
@@ -120,9 +121,10 @@
                             <td><c:out value="${college.collegeName}" /></td>
                             <td><c:out value="${college.address}" /></td>
                             <td><c:out value="${college.addedDate}" /></td>
-                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/><a href="">Delete</a>
-                                <br/><a href="adminInsertRoom.jsp?cid=<c:out value="${college.collegeID}"/>">New Room</a>
+                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
+                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>">Delete</a>
                             </td>
+                            <td><a href="adminViewRoom.jsp?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>
@@ -130,35 +132,6 @@
                   <br/>
                   <button onclick="document.location='adminInsertCollege.jsp'" class="btn btn-primary align-content-center">New College</button>
                   <br/><br/>
-                  <h3 class="display-6">Manage Room </h3>
-                <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>Room ID</th>
-                            <th>Room Name</th>
-                            <th>College ID</th>
-                            <th>Added Date</th>
-                            <th>Room Type</th>
-                            <th>Capacity</th>
-                            <th>Occupied</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${listRoom.rows}" var="room">
-                        <tr>
-                            <td><c:out value="${room.roomID}" /></td>
-                            <td><c:out value="${room.roomName}" /></td>
-                            <td><c:out value="${room.collegeID}" /></td>
-                            <td><c:out value="${room.addedDate}" /></td>
-                            <td><c:out value="${room.roomType}" /></td>
-                            <td><c:out value="${room.capacity}" /></td>
-                            <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>">Update</a><br/><a href="">Delete</a></td>
-                        </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
                </div>
             </div>  
            

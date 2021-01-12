@@ -82,7 +82,7 @@ public class AdminInsertRoomServlet extends HttpServlet {
            int insertStatus = ps.executeUpdate();
           
            if(insertStatus == 1)
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else
              response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
         } catch (SQLException ex) {
