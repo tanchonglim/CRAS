@@ -21,8 +21,8 @@ import jdbc.JDBCUtility;
  *
  * @author Ong Shi Bing
  */
-@WebServlet(name = "AdminUpdateRoomServlet", urlPatterns = {"/AdminUpdateRoomServlet"})
-public class AdminUpdateRoomServlet extends HttpServlet {
+@WebServlet(name = "AdminDeleteCollegeServlet", urlPatterns = {"/AdminDeleteCollegeServlet"})
+public class AdminDeleteCollegeServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -44,7 +44,7 @@ public class AdminUpdateRoomServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatementUpdateRoom();
+        jdbcUtility.prepareSQLStatementDeleteCollege();
     }     
     
     public void destroy() {   
@@ -62,27 +62,18 @@ public class AdminUpdateRoomServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       //get data from form
-        String rName = request.getParameter("roomName");
-        String rType = request.getParameter("roomType");
-        int capacity = Integer.parseInt(request.getParameter("capacity"));
-        int occupied = Integer.parseInt(request.getParameter("occupied"));
-        int rID = Integer.parseInt(request.getParameter("roomID"));
-        int cID = Integer.parseInt(request.getParameter("collegeID"));
+        //get data from form
+        int cID = Integer.parseInt(request.getParameter("cid"));
         
         //insert into database
         try {
-            PreparedStatement ps = jdbcUtility.getpsUpdateRoom();
-            ps.setString(1, rName);
-            ps.setString(2, rType);
-            ps.setInt(3, capacity);
-            ps.setInt(4, occupied);
-            ps.setInt(5, rID);
+            PreparedStatement ps = jdbcUtility.getpsDeleteCollege();
+            ps.setInt(1, cID);
           
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
+                response.sendRedirect(request.getContextPath() + "/adminViewCollege.jsp");
            }
             
            else

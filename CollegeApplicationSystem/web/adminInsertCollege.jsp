@@ -62,6 +62,9 @@
                   <li class="nav-item ">
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
+                  <li>
+                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                  </li>
                </ul>
                 
                 <div class="form-inline mt-2 mt-md-0">
@@ -75,10 +78,11 @@
         <main role="main" class="container">
             <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
+                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Insert College</li>
                </ol>
             <div class="card">
-               <div class="container">
+               <div class="container pt-5">
                    
                    <div class="row justify-content-md-center">
                        <div class="col col-md-6">
@@ -91,10 +95,10 @@
                          
                          <div class="form-group">
                             <label>College Address</label>
-                            <input type="text" class="form-control"" name="collegeAddress" id="collegeAddress">
+                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress">
                          </div>
                       <div class="col text-center" style='padding-bottom: 20px;'>
-                          <button type="submit" class="btn btn-primary align-content-center">Insert</button>
+                          <button type="submit" class="btn btn-dark align-content-center">Insert</button>
                       </div>
                       </form>
                         </div>  

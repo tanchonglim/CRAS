@@ -1,6 +1,6 @@
 <%-- 
-    Document   : adminEditCollege
-    Created on : Jan 11, 2021, 6:34:46 PM
+    Document   : adminViewRoom
+    Created on : Jan 12, 2021, 11:20:16 PM
     Author     : Ong Shi Bing
 --%>
 
@@ -20,6 +20,7 @@
 </c:if>
 
 <jsp:useBean id="user" class="bean.User" scope="session" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,7 +46,7 @@
 
       <!-- Custom styles for this template -->
       <link href="css/navbar-top-fixed.css" rel="stylesheet">
-        <title>Admin Edit College</title>
+        <title>Admin View Room</title>
     </head>
     <body>
         
@@ -55,8 +56,8 @@
         url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
         user="root" password=""
     />
-        <sql:query dataSource="${collegeApplicationData}" var="college">
-            SELECT * from college where collegeID=?;
+        <sql:query dataSource="${collegeApplicationData}" var="listRoom">
+            SELECT * from room where collegeID=?;
             <sql:param value="${param.cid}" />
         </sql:query>
         
@@ -88,37 +89,50 @@
       </nav>
         
         <main role="main" class="container">
-            <ol class="breadcrumb">
+            <nav aria-label="breadcrumb">
+               <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Edit College</li>
+                  <li class="breadcrumb-item active" aria-current="page">View Room</li>
                </ol>
+            </nav>
             <div class="card">
-               <div class="container pt-5">
-                   
-                   <div class="row justify-content-md-center">
-                       <div class="col col-md-6">
-                           <h3>Edit College</h3>
-                        <form action="AdminUpdateCollegeServlet" method="POST">
-                            <c:forEach var="college" items="${college.rows}">
-                        <div class="form-group">
-                            <label>College Name</label>
-                            <input type="text" class="form-control" name="collegeName" id="collegeName" value="${college.collegeName}">
-                         </div>
-                         
-                         <div class="form-group">
-                            <label>College Address</label>
-                            <input type="text" class="form-control"" name="collegeAddress" id="collegeAddress" value="${college.address}">
-                         </div>
-                         <input type="hidden" name="collegeID" id="collegeID" value="${college.collegeID}">
-                         </c:forEach>
-                      <div class="col text-center" style='padding-bottom: 20px;'>
-                          <button class="btn btn-dark" type="submit" class="btn btn-primary align-content-center">Update</button>
-                      </div>
-                      </form>
-                        </div>  
-                    </div>
-               </div>
+               <div class="container px-5 pt-5">
+                           <h3>View Room List</h3>
+                    <table class="table table-striped">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>No.</th>
+                            <th>Room Name</th>
+                            <th>Added Date</th>
+                            <th>Room Type</th>
+                            <th>Capacity</th>
+                            <th>Occupied</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <c:set var="i" value="${1}"/>
+                        <c:forEach items="${listRoom.rows}" var="room">
+                        <tr>
+                            <td><c:out value="${i}" /></td>
+                            <td><c:out value="${room.roomName}" /></td>
+                            <td><fmt:formatDate value="${room.addedDate}" pattern="dd-MM-yyyy" /></td>
+                            <td><c:out value="${room.roomType}" /></td>
+                            <td><c:out value="${room.capacity}" /></td>
+                            <td><c:out value="${room.occupied}" /></td>
+                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
+                        </tr>
+                        <c:set var="i" value="${i+1}"/>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                           
+                <div class="col text-center" style='padding-bottom: 20px;'>
+                  <button class="btn btn-dark" onclick="document.location='adminInsertRoom.jsp?cid=<c:out value="${param.cid}"/>'" class="btn btn-primary align-content-center">New Room</button>
+                </div>
+                </div>  
+
             </div>  
            
         </main>

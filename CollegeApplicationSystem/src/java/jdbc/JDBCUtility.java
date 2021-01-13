@@ -55,6 +55,12 @@ public class JDBCUtility {
     //update room
     PreparedStatement psUpdateRoom = null;
     
+    //delete college
+    PreparedStatement psDeleteCollege = null;
+    
+    //delete room
+    PreparedStatement psDeleteRoom = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -359,5 +365,41 @@ public class JDBCUtility {
 
     public PreparedStatement getPsInsertRoom(){
         return psInsertRoom;
+    }
+    
+    public void prepareSQLStatementDeleteCollege(){
+        
+        try {
+            //create SQL statement
+            String sqlDeleteCollege = "DELETE FROM college WHERE collegeID = ?;";
+            
+            //prepare statement
+            psDeleteCollege = con.prepareStatement(sqlDeleteCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsDeleteCollege(){
+        return psDeleteCollege;
+    }
+    
+    public void prepareSQLStatementDeleteRoom(){
+        
+        try {
+            //create SQL statement
+            String sqlDeleteRoom = "DELETE FROM room WHERE roomID = ?;";
+            
+            //prepare statement
+            psDeleteRoom = con.prepareStatement(sqlDeleteRoom);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsDeleteRoom(){
+        return psDeleteRoom;
     }
 }

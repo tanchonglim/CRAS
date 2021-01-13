@@ -89,11 +89,13 @@
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
+                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View Room</a></li>
+                  <li class="breadcrumb-item"><a href="adminViewRoom.jsp?cid=<c:out value="${param.cid}"/>">View Room</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Edit Room</li>
                </ol>
             </nav>
             <div class="card">
-               <div class="container">
+               <div class="container pt-5">
                    
                    <div class="row justify-content-md-center">
                        <div class="col col-md-6">
@@ -106,12 +108,12 @@
                          </div>
                          
                          <div class="form-group">
-                            <label>Room Type</label>
+                            <label>Room Type</label><br>
                             <select name="roomType" id="roomType" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option value="Double">Double</option>
-                                <option value="Single without Toilet">Single without Toilet</option>
-                                <option value="Single with Toilet">Single with Toilet</option>
+                                <option disabled value> -- select an option -- </option>
+                                <option <c:if test="${room.roomType.equals('Double')}"> selected </c:if> value="Double">Double</option>
+                                <option <c:if test="${room.roomType.equals('Single without Toilet')}"> selected </c:if> value="Single without Toilet">Single without Toilet</option>
+                                <option <c:if test="${room.roomType.equals('Single with Toilet')}"> selected </c:if> value="Single with Toilet">Single with Toilet</option>
                             </select>
                          </div>
                          <div class="form-group">
@@ -123,9 +125,10 @@
                             <input type="text" class="form-control"" name="occupied" id="occupied" value="${room.occupied}">
                          </div>
                          <input type="hidden" name="roomID" id="roomID" value="${room.roomID}">
+                         <input type="hidden" name="collegeID" id="collegeID" value="${room.collegeID}">
                          </c:forEach>
                       <div class="col text-center" style='padding-bottom: 20px;'>
-                          <button type="submit" class="btn btn-primary align-content-center">Update</button>
+                          <button class="btn btn-dark" type="submit" class="btn btn-primary align-content-center">Update</button>
                       </div>
                       </form>
                         </div>  
