@@ -45,23 +45,10 @@
          }
       </style>
 
+      <!-- Custom styles for this template -->
+      <link href="css/navbar-top-fixed.css" rel="stylesheet">
     </head>
     <body>
-    <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-     
-    <sql:query var="listCollege"   dataSource="${collegeApplicationData}">
-        SELECT * FROM college;
-    </sql:query>
-        
-    <sql:query var="listRoom"   dataSource="${collegeApplicationData}">
-        SELECT * FROM room;
-    </sql:query>
-        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -75,6 +62,9 @@
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
+                  </li>
+                  <li>
+                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
                   </li>
                </ul>
                 
@@ -94,111 +84,19 @@
             
             <div class="jumbotron">
                <div class="container">
-                   <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /> (admin) </h1>
+                    <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /> (admin) </h1>
                   <p>
                       This is admin panel <br>
                   </p>
                   <p>
                     <!-- <a class="btn btn-primary" href="#" role="button">Apply Now &raquo;</a> -->
                   </p>
-                  <br/><br/>
-                  <h3 class="display-6">Manage College </h3>
-                <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>College ID</th>
-                            <th>College Name</th>
-                            <th>Address</th>
-                            <th>Added Date</th>
-                            <th>Operation</th>
-                            <th>Room</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${listCollege.rows}" var="college">
-                        <tr>
-                            <td><c:out value="${college.collegeID}" /></td>
-                            <td><c:out value="${college.collegeName}" /></td>
-                            <td><c:out value="${college.address}" /></td>
-                            <td><c:out value="${college.addedDate}" /></td>
-                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
-                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>">Delete</a>
-                            </td>
-                            <td><a href="adminViewRoom.jsp?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
-                        </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                  <br/>
-                  <button onclick="document.location='adminInsertCollege.jsp'" class="btn btn-primary align-content-center">New College</button>
-                  <br/><br/>
                </div>
             </div>  
            
         </main>
-        
-        
-        <!--div class="jumbotron">
-            <div class="container">
-                <h3 class="display-6">Manage College </h3>
-                <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>College ID</th>
-                            <th>College Name</th>
-                            <th>Address</th>
-                            <th>Added Date</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${listCollege.rows}" var="college">
-                        <tr>
-                            <td><c:out value="${college.collegeID}" /></td>
-                            <td><c:out value="${college.collegeName}" /></td>
-                            <td><c:out value="${college.address}" /></td>
-                            <td><c:out value="${college.addedDate}" /></td>
-                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/><a href="">Delete</a></td>
-                        </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </div-->
-                  
-        <!--div class="jumbotron">
-            <div class="container">
-                <h3 class="display-6">Manage Room </h3>
-                <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>Room ID</th>
-                            <th>Room Name</th>
-                            <th>College ID</th>
-                            <th>Added Date</th>
-                            <th>Room Type</th>
-                            <th>Capacity</th>
-                            <th>Occupied</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${listRoom.rows}" var="room">
-                        <tr>
-                            <td><c:out value="${room.roomID}" /></td>
-                            <td><c:out value="${room.roomName}" /></td>
-                            <td><c:out value="${room.collegeID}" /></td>
-                            <td><c:out value="${room.addedDate}" /></td>
-                            <td><c:out value="${room.roomType}" /></td>
-                            <td><c:out value="${room.capacity}" /></td>
-                            <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>">Update</a><br/><a href="">Delete</a></td>
-                        </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-        </div>
-      </div-->
+
+      
       <script src="js/jquery-3.5.1.min.js"></script>
       <script src="js/popper.min.js"></script>      
       <script src="js/bootstrap.min.js"></script>

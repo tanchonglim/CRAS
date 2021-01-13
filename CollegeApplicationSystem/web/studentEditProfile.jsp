@@ -131,7 +131,7 @@
                                                  
                     
                       <div class="col text-center" style='padding-bottom: 20px;'>
-                          <button type="submit" class="btn btn-primary align-content-center">Update</button>
+                          <button class="btn btn-dark" type="submit" class="btn btn-primary align-content-center">Update</button>
                       </div>
                       </form>
                         </div>  

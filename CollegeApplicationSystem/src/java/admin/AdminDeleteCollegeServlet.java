@@ -73,7 +73,7 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+                response.sendRedirect(request.getContextPath() + "/adminViewCollege.jsp");
            }
             
            else

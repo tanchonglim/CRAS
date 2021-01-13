@@ -1,15 +1,17 @@
 <%-- 
-    Document   : adminViewRoom
-    Created on : Jan 12, 2021, 11:20:16 PM
-    Author     : Ong Shi Bing
+    Document   : adminViewCollege
+    Created on : Jan 13, 2021, 9:10:48 PM
+    Author     : Wen Jie
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
+<%@ page import="bean.College" %>
+<%@ page import="bean.Room" %>
+<%@ page import="java.util.ArrayList" %>
 
 <c:if test="${sessionScope.user == null}">
     <c:redirect url="/notAuthorized.jsp" />   
@@ -20,13 +22,14 @@
 </c:if>
 
 <jsp:useBean id="user" class="bean.User" scope="session" />
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Admin View College</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
+        
         <style>
          .bd-placeholder-img {
            font-size: 1.125rem;
@@ -43,24 +46,19 @@
            }
          }
       </style>
-
-      <!-- Custom styles for this template -->
-      <link href="css/navbar-top-fixed.css" rel="stylesheet">
-        <title>Admin View Room</title>
-    </head>
-    <body>
-        
-        <sql:setDataSource
+    <sql:setDataSource
         var="collegeApplicationData"
         driver="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
         user="root" password=""
     />
-        <sql:query dataSource="${collegeApplicationData}" var="listRoom">
-            SELECT * from room where collegeID=?;
-            <sql:param value="${param.cid}" />
-        </sql:query>
-        
+     
+    <sql:query var="listCollege"   dataSource="${collegeApplicationData}">
+        SELECT * FROM college;
+    </sql:query>
+ <link href="css/navbar-top-fixed.css" rel="stylesheet">
+    </head>
+    <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -86,53 +84,50 @@
 
             </div>
          </div>
-      </nav>
-        
+      </nav>     
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Room</li>
+                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">View College</li>
                </ol>
             </nav>
+            
             <div class="card">
                <div class="container px-5 pt-5">
-                           <h3>View Room List</h3>
-                    <table class="table table-striped">
-                    <thead class="table-dark text-center">
+                   <h3 class="display-6">Manage College </h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark text-center">
                         <tr>
                             <th>No.</th>
-                            <th>Room Name</th>
+                            <th>College Name</th>
+                            <th>Address</th>
                             <th>Added Date</th>
-                            <th>Room Type</th>
-                            <th>Capacity</th>
-                            <th>Occupied</th>
                             <th>Operation</th>
+                            <th>Room</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         <c:set var="i" value="${1}"/>
-                        <c:forEach items="${listRoom.rows}" var="room">
+                        <c:forEach items="${listCollege.rows}" var="college">
                         <tr>
                             <td><c:out value="${i}" /></td>
-                            <td><c:out value="${room.roomName}" /></td>
-                            <td><fmt:formatDate value="${room.addedDate}" pattern="dd-MM-yyyy" /></td>
-                            <td><c:out value="${room.roomType}" /></td>
-                            <td><c:out value="${room.capacity}" /></td>
-                            <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
+                            <td><c:out value="${college.collegeName}" /></td>
+                            <td><c:out value="${college.address}" /></td>
+                            <td><fmt:formatDate value="${college.addedDate}" pattern="dd-MM-yyyy" /></td>
+                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
+                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>">Delete</a>
+                            </td>
+                            <td><a href="adminViewRoom.jsp?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
                         </tr>
                         <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>
-                           
-                <div class="col text-center" style='padding-bottom: 20px;'>
-                  <button class="btn btn-dark" onclick="document.location='adminInsertRoom.jsp?cid=<c:out value="${param.cid}"/>'" class="btn btn-primary align-content-center">New Room</button>
-                </div>
-                </div>  
-
+                  <div class="col text-center" style='padding-bottom: 20px;'>
+                  <button class="btn btn-dark" onclick="document.location='adminInsertCollege.jsp'" class="btn btn-primary align-content-center">New College</button>
+                  </div>
+               </div>
             </div>  
            
         </main>
@@ -143,3 +138,4 @@
       <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+
