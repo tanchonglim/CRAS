@@ -3,8 +3,13 @@
     Created on : Jan 10, 2021, 2:16:02 PM
     Author     : User
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="bean.User" %>
+<%@ page import="bean.Student" %>
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,8 +42,23 @@
             </g>
         </svg>
           <h1>You are not allowed to enter here</h1>
-          <h2>Go <a target="_blank" href="login.jsp">Home!</a></h2>
+
         
+          <c:choose>
+         
+            <c:when test = "${sessionScope.user != null && sessionScope.student == null}">
+               <h2>Go <a target="_blank" href="adminHome.jsp">Home!</a></h2>
+            </c:when>
+
+            <c:when test = "${sessionScope.user != null && sessionScope.student != null}">
+               <h2>Go <a target="_blank" href="studentHome.jsp">Home!</a></h2>
+            </c:when>
+               
+            <c:when test = "${sessionScope.user == null}">
+               <h2>Go <a target="_blank" href="login.jsp">Home!</a></h2>
+            </c:when>
+
+         </c:choose>
         
         <!-- Eye Movement JS-->
         <script src="js/notAuthorized.js"></script>
