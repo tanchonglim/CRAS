@@ -77,6 +77,14 @@
                </ol>
             </nav>
             
+            <c:if test="${param.message != null}"> 
+                <div class="alert alert-danger" role="alert"> ${param.message} </div>
+            </c:if>
+ 
+             <c:if test="${param.success != null}"> 
+                <div class="alert alert-success" role="alert"> ${param.success} </div>
+            </c:if>
+            
             <div class="jumbotron">
                <div class="container">
                    <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /> (student) </h1>
@@ -84,14 +92,21 @@
                       Are you here for college room application? <br>
                   </p>
                   <p>
-                     <a class="btn btn-primary" href="#" role="button">Apply Now &raquo;</a>
+                     <c:choose>
+                         <c:when test="${student.application == 1}">
+                            <a class="btn btn-primary disabled" href="studentSelectCollege.jsp" role="button">Apply Now &raquo;</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-primary" href="studentSelectCollege.jsp" role="button">Apply Now &raquo;</a>
+                        </c:otherwise>
+                    </c:choose>
+                  </p>
+                  <p>
+                      <a class="btn btn-primary" href="studentViewApplication.jsp" role="button">View Application &raquo;</a>
                   </p>
                </div>
             </div>  
-           
         </main>
-
-      
       <script src="js/jquery-3.5.1.min.js"></script>
       <script src="js/popper.min.js"></script>      
       <script src="js/bootstrap.min.js"></script>

@@ -67,10 +67,26 @@ public class Student {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+    
+    /**
+     * @return the imagePath
+     */
+    public int getApplication() {
+        return application;
+    }
+
+    /**
+     * @param imagePath the imagePath to set
+     */
+    public void setApplication(int application) {
+        this.application = application;
+    }
+    
     private int studentID;
     private String name;
     private String matricNo;
     private String imagePath;
+    private int application;
     
     
 }

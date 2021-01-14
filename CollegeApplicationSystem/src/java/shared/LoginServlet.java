@@ -123,12 +123,14 @@ public class LoginServlet extends HttpServlet {
                            String name = selectResult2.getString("name");
                            String matricNo = selectResult2.getString("matricNo");
                            String imagepath = selectResult2.getString("imagepath");
+                           int application = Integer.parseInt(selectResult2.getString("application"));
                            
                            student = new Student();
                            student.setName(name);
                            student.setMatricNo(matricNo);
                            student.setStudentID(studentID);
                            student.setImagePath(imagepath);
+                           student.setApplication(application);
                        }
                        
                        session.setAttribute("student", student);

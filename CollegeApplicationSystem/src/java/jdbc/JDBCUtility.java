@@ -61,6 +61,14 @@ public class JDBCUtility {
     //delete room
     PreparedStatement psDeleteRoom = null;
     
+    PreparedStatement psInsertApplication = null;
+    
+    PreparedStatement psUpdateRoomOccupied = null;
+    
+    PreparedStatement psUpdateStudentApplication = null;
+    
+     PreparedStatement psSelectApplication = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -401,5 +409,79 @@ public class JDBCUtility {
     
     public PreparedStatement getpsDeleteRoom(){
         return psDeleteRoom;
+    }
+    
+    public void prepareSQLStatementInsertApplication(){
+        
+        try {
+           
+            //create SQL statement
+            String sqlInsertApplication = "INSERT INTO application(studentID, roomID, status, applicationDate)" +
+                                   " VALUES(?, ?, ?, NOW())"; 
+            
+            //prepare statement
+            psInsertApplication = con.prepareStatement(sqlInsertApplication);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+
+    public PreparedStatement getPsInsertApplication(){
+        return psInsertApplication;
+    }
+    
+    public void prepareSQLStatementUpdateRoomOccupied(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateRoomOccupied = "UPDATE room SET occupied = ? WHERE roomID = ?;";
+            
+            //prepare statement
+            psUpdateRoomOccupied = con.prepareStatement(sqlUpdateRoomOccupied);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateRoomOccupied(){
+        return psUpdateRoomOccupied;
+    }
+    
+    public void prepareSQLStatementUpdateStudentApplication(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateStudentApplication = "UPDATE student SET application = ? WHERE studentID = ?;";
+            
+            //prepare statement
+            psUpdateStudentApplication = con.prepareStatement(sqlUpdateStudentApplication);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateStudentApplication(){
+        return psUpdateStudentApplication;
+    }
+    
+    public void prepareSQLStatemenSelectApplication(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectApplication = "SELECT * FROM application where studentID = ?;";
+            
+            //prepare statement
+            psSelectApplication  = con.prepareStatement(sqlSelectApplication);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectApplication(){
+        return psSelectApplication;
     }
 }

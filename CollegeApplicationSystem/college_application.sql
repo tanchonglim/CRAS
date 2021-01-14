@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2021 at 06:38 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Generation Time: Jan 14, 2021 at 11:42 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.2.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -37,6 +36,13 @@ CREATE TABLE `application` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `application`
+--
+
+INSERT INTO `application` (`applicationID`, `applicationDate`, `processedDate`, `studentID`, `roomID`, `status`) VALUES
+(37, '2021-01-14 14:04:19', NULL, 1, 1, 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -58,7 +64,8 @@ INSERT INTO `college` (`collegeID`, `collegeName`, `address`, `addedDate`) VALUE
 (1, 'KTDI', 'Jalan ABC', '2021-01-11 14:23:50'),
 (5, 'KTHO', 'Jalan DEF', '2021-01-11 20:31:02'),
 (6, 'KTR', 'Jalan GHI', '2021-01-11 20:31:02'),
-(9, 'KRP', 'Jalan GGG', '2021-01-12 01:05:19');
+(9, 'KRP', 'Jalan GGG', '2021-01-12 01:05:19'),
+(10, 'Kekw', 'kekw', '2021-01-14 12:55:40');
 
 -- --------------------------------------------------------
 
@@ -81,10 +88,13 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`roomID`, `roomName`, `collegeID`, `addedDate`, `roomType`, `capacity`, `occupied`) VALUES
-(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 2, 0),
+(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 2, 1),
 (3, '301', 1, '2021-01-11 20:47:21', 'Single with Toilet', 1, 0),
 (5, '202', 5, '2021-01-12 01:33:03', 'Double', 2, 0),
-(6, '303', 6, '2021-01-12 01:33:26', 'Single without Toilet', 22, 1);
+(6, '303', 6, '2021-01-12 01:33:26', 'Single without Toilet', 22, 0),
+(7, '401', 1, '2021-01-13 12:06:34', 'Double', 1, 0),
+(8, 'a', 10, '2021-01-14 10:55:22', 'a', 2, 0),
+(9, '123', 5, '2021-01-14 10:55:22', '321', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -96,16 +106,17 @@ CREATE TABLE `student` (
   `studentID` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `matricNo` varchar(255) NOT NULL,
-  `imagePath` varchar(255) NOT NULL DEFAULT 'default.png'
+  `imagePath` varchar(255) NOT NULL DEFAULT 'default.png',
+  `application` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`studentID`, `name`, `matricNo`, `imagePath`) VALUES
-(1, 'james bond', 'AM1234', 'default.png'),
-(2, 'User 1', 'user111', 'default.png');
+INSERT INTO `student` (`studentID`, `name`, `matricNo`, `imagePath`, `application`) VALUES
+(1, 'james bond', 'AM1234', 'default.png', 1),
+(2, 'User 1', 'user111', 'default.png', 0);
 
 -- --------------------------------------------------------
 
@@ -137,6 +148,12 @@ INSERT INTO `user` (`userID`, `username`, `email`, `password`, `salt`, `addedDat
 --
 
 --
+-- Indexes for table `application`
+--
+ALTER TABLE `application`
+  ADD PRIMARY KEY (`applicationID`);
+
+--
 -- Indexes for table `college`
 --
 ALTER TABLE `college`
@@ -152,7 +169,8 @@ ALTER TABLE `room`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`studentID`);
+  ADD PRIMARY KEY (`studentID`),
+  ADD UNIQUE KEY `matricNo` (`matricNo`);
 
 --
 -- Indexes for table `user`
@@ -165,28 +183,34 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `application`
+--
+ALTER TABLE `application`
+  MODIFY `applicationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
 -- AUTO_INCREMENT for table `college`
 --
 ALTER TABLE `college`
-  MODIFY `collegeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `collegeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `roomID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `roomID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
