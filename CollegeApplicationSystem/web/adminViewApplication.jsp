@@ -1,15 +1,14 @@
 <%-- 
-    Document   : adminViewRoom
-    Created on : Jan 12, 2021, 11:20:16 PM
-    Author     : Ong Shi Bing
+    Document   : adminViewApplication
+    Created on : Jan 13, 2021, 8:59:44 PM
+    Author     : user
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<%@ page import="bean.User" %>
+<%@ page import="java.util.ArrayList" %>
+
+
 
 <c:if test="${sessionScope.user == null}">
     <c:redirect url="/notAuthorized.jsp" />   
@@ -46,20 +45,11 @@
 
       <!-- Custom styles for this template -->
       <link href="css/navbar-top-fixed.css" rel="stylesheet">
-        <title>Admin View Room</title>
+        <title>Admin View Application</title>
     </head>
     <body>
         
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-        <sql:query dataSource="${collegeApplicationData}" var="listRoom">
-            SELECT * from room where collegeID=?;
-            <sql:param value="${param.cid}" />
-        </sql:query>
+
         
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
@@ -75,7 +65,7 @@
                   <li class="nav-item ">
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
-                  <li>
+                   <li>
                      <a class="nav-link active" href="adminViewCollege.jsp">College </a>
                   </li>
                   <li>
@@ -95,49 +85,53 @@
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Room</li>
+                  <li class="breadcrumb-item active" aria-current="page">View Applications</li>
                </ol>
             </nav>
             <div class="card">
-               <div class="container px-5 pt-5">
-                           <h3>View Room List</h3>
-                    <table class="table table-striped">
-                    <thead class="table-dark text-center">
+               <div class="container">
+                   
+                   <div class="row justify-content-md-center text-center">
+                       <div class="col">
+                           <h3>View Application List</h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark text-center">
                         <tr>
-                            <th>No.</th>
-                            <th>Room Name</th>
-                            <th>Added Date</th>
-                            <th>Room Type</th>
-                            <th>Capacity</th>
-                            <th>Occupied</th>
-                            <th>Operation</th>
+                            <th>Application ID</th>
+                            <th>Application Date</th>
+                            <th>Processed Date</th>
+                            <th>Student ID</th>
+                            <th>Room ID</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <c:set var="i" value="${1}"/>
-                        <c:forEach items="${listRoom.rows}" var="room">
+                        <c:forEach items="${requestScope.applicationList}" var="application" varStatus="loop">
                         <tr>
-                            <td><c:out value="${i}" /></td>
-                            <td><c:out value="${room.roomName}" /></td>
-                            <td><fmt:formatDate value="${room.addedDate}" pattern="dd-MM-yyyy" /></td>
-                            <td><c:out value="${room.roomType}" /></td>
-                            <td><c:out value="${room.capacity}" /></td>
-                            <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
+                            <td><c:out value="${application.applicationID}" /></td>
+                            <td><c:out value="${application.applicationDate}" /></td>
+                            <td><c:out value="${application.processedDate}"/></td>
+                            <td><c:out value="${application.studentID}" /></td>
+                            <td><c:out value="${application.roomID}" /></td>
+                            <td><c:out value="${application.status}" /></td>
+                            <td>
+                                <form action="AdminUpdateApprovalApplicationServlet" method="POST">
+                                  <button name="status" type="submit" value="approved" class="btn btn-outline-dark btn-sm m-1">Approve</button>
+                                  <button name="status" type="submit" value="unapproved" class="btn btn-outline-dark btn-sm m-1">Unapprove</button>
+                                  <input type="hidden" name="applicationID" value="<c:out value="${application.applicationID}" />">
+                                </form>
+                            </td>
                         </tr>
-                        <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>
-                           
-                <div class="col text-center" style='padding-bottom: 20px;'>
-                  <button class="btn btn-dark" onclick="document.location='adminInsertRoom.jsp?cid=<c:out value="${param.cid}"/>'" class="btn btn-primary align-content-center">New Room</button>
-                </div>
-                </div>  
-
+                           <br/>
+                  <br/><br/>
+                        </div>  
+                    </div>
+               </div>
             </div>  
-           
         </main>
 
       

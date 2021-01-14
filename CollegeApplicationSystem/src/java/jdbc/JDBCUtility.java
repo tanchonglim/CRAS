@@ -67,8 +67,14 @@ public class JDBCUtility {
     
     PreparedStatement psUpdateStudentApplication = null;
     
-     PreparedStatement psSelectApplication = null;
+    PreparedStatement psSelectApplication = null;
     
+    //admin select all application
+    PreparedStatement psSelectAllApplication = null;
+    
+    //admin update application approval
+    PreparedStatement psUpdateApprovalApplication = null;
+
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -484,4 +490,42 @@ public class JDBCUtility {
     public PreparedStatement getpsSelectApplication(){
         return psSelectApplication;
     }
+    
+    public void prepareSQLStatementSelectAllApplication(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllApplication = "SELECT * FROM application";
+            
+            //prepare statement
+            psSelectAllApplication  = con.prepareStatement(sqlSelectAllApplication);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getPsSelectAllApplication(){
+        return psSelectAllApplication;
+    }
+    
+    public void prepareSQLStatementUpdateApprovalApplication(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateApprovalApplication = "UPDATE application SET status = ?, processedDate = NOW() WHERE applicationID = ?;";
+            
+            //prepare statement
+            psUpdateApprovalApplication = con.prepareStatement(sqlUpdateApprovalApplication);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateApprovalApplication(){
+        return psUpdateApprovalApplication;
+    }
+
 }
+

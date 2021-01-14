@@ -77,6 +77,9 @@
                   <li>
                      <a class="nav-link active" href="adminViewCollege.jsp">College </a>
                   </li>
+                  <li>
+                     <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
+                  </li>
                </ul>
                 
                 <div class="form-inline mt-2 mt-md-0">
