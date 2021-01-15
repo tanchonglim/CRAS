@@ -33,26 +33,10 @@
         url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
         user="root" password=""
     />
-     
-        <sql:query var="listCollege" dataSource="${collegeApplicationData}">
-            SELECT * FROM college;
-        </sql:query>
-
-        <sql:query var="listRoom"   dataSource="${collegeApplicationData}">
-            SELECT * FROM room;
-            <%-- where collegeID=?;<sql:param value="${listCollege.collegeID}" />; --%>
-        </sql:query>
-        
-        <c:set var="total_space" value="${[1,1,1,1,1]}"/>
-            
-        <c:forEach items="${listCollege.rows}" var="college">
-            <c:forEach items="${listRoom.rows}" var="room">
-                <c:if test="${room.collegeID == college.collegeID}">
-                    <c:set var="total" value="${total + room.capacity - room.occupied}" scope="page"/>
-                </c:if>
-            </c:forEach>
-            <!--total_space.push('${total}');-->
-        </c:forEach>
+        <%
+            ArrayList<College> collegeList = (ArrayList<College>)request.getAttribute("data");
+            pageContext.setAttribute("collegeList", collegeList);
+        %>
         
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
@@ -100,11 +84,11 @@
                         </tr>
                     </thead>
                     <tbody class="table-secondary text-center">
-                        <c:forEach items="${listCollege.rows}" var="college">
+                        <c:forEach items="${collegeList}" var="college">
                         <tr>                            
-                            <td><c:out value="${college.collegeName}" /></td>
+                            <td><c:out value="${college.getCollegeName()}" /></td>
                             <td><c:out value="" /></td>                            
-                            <td><a href="studentApplyCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Select</a></td>
+                            <td><a href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />">Select</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>

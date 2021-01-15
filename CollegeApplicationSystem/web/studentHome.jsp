@@ -97,12 +97,12 @@
                             <a class="btn btn-primary disabled" href="studentSelectCollege.jsp" role="button">Apply Now &raquo;</a>
                         </c:when>
                         <c:otherwise>
-                            <a class="btn btn-primary" href="studentSelectCollege.jsp" role="button">Apply Now &raquo;</a>
+                            <a class="btn btn-primary" href="StudentSelectCollegeServlet" role="button">Apply Now &raquo;</a>
                         </c:otherwise>
                     </c:choose>
                   </p>
                   <p>
-                      <a class="btn btn-primary" href="studentViewApplication.jsp" role="button">View Application &raquo;</a>
+                      <a class="btn btn-primary" href="StudentViewApplicationServlet" role="button">View Application &raquo;</a>
                   </p>
                </div>
             </div>  

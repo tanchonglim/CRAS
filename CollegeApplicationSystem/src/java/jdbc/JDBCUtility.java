@@ -79,6 +79,8 @@ public class JDBCUtility {
     
     PreparedStatement psSelectRoomByRoomID = null;
     
+    PreparedStatement getpsSelectAllApplicationStud = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -566,6 +568,25 @@ public class JDBCUtility {
     public PreparedStatement getpsSelectRoomByRoomID(){
         return psSelectRoomByRoomID;
     }
+    
+    public void prepareSQLStatemenSelectAllApplicationStud(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllApplicationStud = "SELECT * FROM application INNER JOIN room ON application.roomID = room.roomId INNER JOIN college on room.collegeID = college.collegeID WHERE studentID = ?;";
+            
+            //prepare statement
+            getpsSelectAllApplicationStud  = con.prepareStatement(sqlSelectAllApplicationStud);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectAllApplicationStud(){
+        return getpsSelectAllApplicationStud;
+    }
+    
 
 }
 

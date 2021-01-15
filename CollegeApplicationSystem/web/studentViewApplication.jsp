@@ -4,6 +4,7 @@
     Author     : Yeoh Kai Xiang
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,19 +24,11 @@
         <link href="css/navbar-top-fixed.css" rel="stylesheet"> 
     </head>
     <body>
-        <jsp:useBean id="student" class="bean.Student" scope="session" />
+        <% ResultSet rs = (ResultSet)request.getAttribute("data"); 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String date = formatter.format(rs.getDate(2));
+        %>
         
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-        />
-        
-        <sql:query dataSource="${collegeApplicationData}" var="collegeApplication">
-            SELECT * from application INNER JOIN room ON application.roomID = room.roomID INNER JOIN college ON room.collegeID = college.collegeID where studentID=? ;
-            <sql:param value="${student.studentID}" />
-        </sql:query>
             
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
@@ -87,17 +80,15 @@
                             <th>Processed Date</th>                      
                         </tr>
                     </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${collegeApplication.rows}" var="application">
+                    <tbody class="table-secondary text-center">                        
                         <tr>
-                            <td><c:out value="${application.applicationDate}" /></td>
-                            <td><c:out value="${application.collegeName}" /></td>
-                            <td><c:out value="${application.roomName}"/></td>
-                            <td><c:out value="${application.roomType}"/></td>
-                            <td><c:out value="${application.status}" /></td>
-                            <td><c:out value="${application.processedDate}" /></td>
+                            <td><%= date %></td>
+                            <td><%= rs.getString(15) %></td>
+                            <td><%= rs.getString(8) %></td>
+                            <td><%= rs.getString(11) %></td>
+                            <td><%= rs.getString(6) %></td>
+                            <td><%= rs.getDate(3) %></td>
                         </tr>
-                        </c:forEach>
                     </tbody>
                 </table>
                         

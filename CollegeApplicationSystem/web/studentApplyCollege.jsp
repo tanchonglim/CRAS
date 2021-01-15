@@ -4,6 +4,7 @@
     Author     : Yeoh Kai Xiang
 --%>
 
+<%@page import="bean.Room"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -25,16 +26,10 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-        <sql:query dataSource="${collegeApplicationData}" var="listRoom">
-            SELECT * from room where collegeID=?;
-            <sql:param value="${param.cid}" />
-        </sql:query>
+        <%
+            ArrayList<Room> roomList = (ArrayList<Room>)request.getAttribute("data");
+            pageContext.setAttribute("roomList", roomList);
+        %>
        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
@@ -76,7 +71,6 @@
                         <table class="table-light table-bordered">
                     <thead class="table-primary text-center">
                         <tr>
-                            <th>Room ID</th>
                             <th>Room Name</th>
                             <th>Room Type</th>
                             <th>Capacity</th>
@@ -85,20 +79,19 @@
                         </tr>
                     </thead>
                     <tbody class="table-secondary text-center">
-                        <c:forEach items="${listRoom.rows}" var="room">
+                        <c:forEach items="${roomList}" var="room">
                             <form action="StudentApplyCollegeRoomServlet" method="POST">
-                            <c:if test="${room.capacity - room.occupied > 0}" >
-                                <tr>                           
-                                    <td><c:out value="${room.roomID}" /></td>  
-                                    <td><c:out value="${room.roomName}" /></td>  
-                                    <td><c:out value="${room.roomType}" /></td>
-                                    <td><c:out value="${room.capacity}" /></td>
-                                    <td><c:out value="${room.occupied}" /></td>
+                            <c:if test="${room.getCapacity() - room.getOccupied() > 0}" >
+                                <tr>            
+                                    <td><c:out value="${room.getRoomName()}" /></td>  
+                                    <td><c:out value="${room.getRoomType()}" /></td>
+                                    <td><c:out value="${room.getCapacity()}" /></td>
+                                    <td><c:out value="${room.getOccupied()}" /></td>
                                     <td> <button type="submit" class="btn btn-primary align-content-center">Apply</button></td>
                                 </tr>
                             </c:if>
-                            <input type="hidden" name="occupied" value="${room.occupied}">
-                            <input type="hidden" name="rid"  id="roomID" value="${room.roomID}">
+                            <input type="hidden" name="occupied" value="${room.getOccupied()}">
+                            <input type="hidden" name="rid"  id="roomID" value="${room.getRoomID()}">
                             </form>
                         </c:forEach>
                     </tbody>
