@@ -5,11 +5,17 @@
  */
 package admin;
 
+import bean.College;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +27,8 @@ import jdbc.JDBCUtility;
  *
  * @author Ong Shi Bing
  */
-@WebServlet(name = "AdminUpdateRoomServlet", urlPatterns = {"/AdminUpdateRoomServlet"})
-public class AdminUpdateRoomServlet extends HttpServlet {
+@WebServlet(name = "AdminSelectAllCollegeServlet", urlPatterns = {"/AdminSelectAllCollegeServlet"})
+public class AdminSelectAllCollegeServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -44,12 +50,12 @@ public class AdminUpdateRoomServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatementUpdateRoom();
+        jdbcUtility.prepareSQLStatemenSelectAllCollege();
     }     
     
     public void destroy() {   
         jdbcUtility.jdbcConClose();
-    }
+    } 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,31 +68,39 @@ public class AdminUpdateRoomServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       //get data from form
-        String rName = request.getParameter("roomName");
-        String rType = request.getParameter("roomType");
-        int capacity = Integer.parseInt(request.getParameter("capacity"));
-        int occupied = Integer.parseInt(request.getParameter("occupied"));
-        int rID = Integer.parseInt(request.getParameter("roomID"));
-        int cID = Integer.parseInt(request.getParameter("collegeID"));
-        
-        //insert into database
+        //retrieve from database
         try {
-            PreparedStatement ps = jdbcUtility.getpsUpdateRoom();
-            ps.setString(1, rName);
-            ps.setString(2, rType);
-            ps.setInt(3, capacity);
-            ps.setInt(4, occupied);
-            ps.setInt(5, rID);
-          
-           int updateStatus = ps.executeUpdate();
-          
-           if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
-           }
+            PreparedStatement ps = jdbcUtility.getpsSelectAllCollege();
+            ResultSet rs = ps.executeQuery();
+
             
+            ArrayList collegeList = new ArrayList();
+            College college; 
+
+            while(rs.next()) {
+                
+                int cID = rs.getInt("collegeID");
+                String collegeName = rs.getString("collegeName");
+                String address = rs.getString("address");
+                Date addedDate = rs.getDate("addedDate");
+                
+         
+                college = new College();
+                college.setCollegeID(cID);
+                college.setCollegeName(collegeName);
+                college.setAddress(address);
+                college.setAddedDate(addedDate);
+                
+                collegeList.add(college);
+            }
+            
+            request.setAttribute("collegeList", collegeList);
+            request.getRequestDispatcher("adminViewCollege.jsp").forward(request, response);
+         
+           /*if(insertStatus == 1)
+            response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");*/
         } catch (SQLException ex) {
             //failed
             while (ex != null) {

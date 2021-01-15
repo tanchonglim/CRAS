@@ -64,7 +64,7 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>

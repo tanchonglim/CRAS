@@ -8,7 +8,6 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
 
 <c:if test="${sessionScope.user == null}">
@@ -50,17 +49,6 @@
     </head>
     <body>
         
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-        <sql:query dataSource="${collegeApplicationData}" var="room">
-            SELECT * from room where roomID=?;
-            <sql:param value="${param.rid}" />
-        </sql:query>
-        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -76,7 +64,7 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
@@ -95,8 +83,8 @@
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View Room</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewRoom.jsp?cid=<c:out value="${param.cid}"/>">View Room</a></li>
+                  <li class="breadcrumb-item"><a href="AdminSelectAllCollegeServlet">View College</a></li>
+                  <li class="breadcrumb-item"><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${param.cid}"/>">View Room</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Edit Room</li>
                </ol>
             </nav>
@@ -107,7 +95,7 @@
                        <div class="col col-md-6">
                            <h3>Edit Room</h3>
                         <form action="AdminUpdateRoomServlet" method="POST">
-                            <c:forEach var="room" items="${room.rows}">
+                            <c:forEach items="${requestScope.roomList}" var="room" varStatus="loop">
                         <div class="form-group">
                             <label>Room Name</label>
                             <input type="text" class="form-control" name="roomName" id="roomName" value="${room.roomName}">

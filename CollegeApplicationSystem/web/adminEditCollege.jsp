@@ -8,7 +8,6 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
 
 <c:if test="${sessionScope.user == null}">
@@ -49,17 +48,6 @@
     </head>
     <body>
         
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-        <sql:query dataSource="${collegeApplicationData}" var="college">
-            SELECT * from college where collegeID=?;
-            <sql:param value="${param.cid}" />
-        </sql:query>
-        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -75,7 +63,7 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
@@ -93,7 +81,7 @@
         <main role="main" class="container">
             <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
+                  <li class="breadcrumb-item"><a href="AdminSelectAllCollegeServlet">View College</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Edit College</li>
                </ol>
             <div class="card">
@@ -103,7 +91,7 @@
                        <div class="col col-md-6">
                            <h3>Edit College</h3>
                         <form action="AdminUpdateCollegeServlet" method="POST">
-                            <c:forEach var="college" items="${college.rows}">
+                            <c:forEach items="${requestScope.collegeList}" var="college">
                         <div class="form-group">
                             <label>College Name</label>
                             <input type="text" class="form-control" name="collegeName" id="collegeName" value="${college.collegeName}">

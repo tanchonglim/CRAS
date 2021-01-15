@@ -47,7 +47,7 @@ public class JDBCUtility {
     PreparedStatement psUpdateCollege = null;
     
     //college room
-    PreparedStatement psSelectAllRoom = null;
+    PreparedStatement psSelectRoomByID = null;
     
     //insert room
     PreparedStatement psInsertRoom = null;
@@ -75,6 +75,10 @@ public class JDBCUtility {
     //admin update application approval
     PreparedStatement psUpdateApprovalApplication = null;
 
+    PreparedStatement psSelectCollegeByID = null;
+    
+    PreparedStatement psSelectRoomByRoomID = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -287,22 +291,22 @@ public class JDBCUtility {
         return psSelectAllCollege;
     }
     
-    public void prepareSQLStatemenSelectAllRoom(){
+    public void prepareSQLStatemenSelectRoomByID(){
         
         try {
             //create SQL statement
-            String sqlSelectAllCollege = "SELECT * FROM college";
+            String sqlSelectAllCollege = "SELECT * FROM room WHERE collegeID = ?;";
             
             //prepare statement
-            psSelectAllCollege  = con.prepareStatement(sqlSelectAllCollege);            
+            psSelectRoomByID  = con.prepareStatement(sqlSelectAllCollege);            
         }
         catch (SQLException ex) {
             ex.printStackTrace ();
         }
     }
     
-    public PreparedStatement getpsSelectAllRoom(){
-        return psSelectAllCollege;
+    public PreparedStatement getpsSelectRoomByID(){
+        return psSelectRoomByID;
     }
     
     public void prepareSQLStatementUpdateCollege(){
@@ -525,6 +529,42 @@ public class JDBCUtility {
     
     public PreparedStatement getpsUpdateApprovalApplication(){
         return psUpdateApprovalApplication;
+    }
+    
+    public void prepareSQLStatemenSelectCollegeByID(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectCollegeByID = "SELECT * FROM college WHERE collegeID = ?;";
+            
+            //prepare statement
+            psSelectCollegeByID  = con.prepareStatement(sqlSelectCollegeByID);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectCollegeByID(){
+        return psSelectCollegeByID;
+    }
+    
+    public void prepareSQLStatemenSelectRoomByRoomID(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectRoomByRoomID = "SELECT * FROM room WHERE roomID = ?;";
+            
+            //prepare statement
+            psSelectRoomByRoomID  = con.prepareStatement(sqlSelectRoomByRoomID);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectRoomByRoomID(){
+        return psSelectRoomByRoomID;
     }
 
 }

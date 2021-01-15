@@ -79,7 +79,7 @@ public class AdminUpdateCollegeServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/adminViewCollege.jsp");
+                response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet");
            }
             
            else

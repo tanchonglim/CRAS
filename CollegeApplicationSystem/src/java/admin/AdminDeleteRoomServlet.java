@@ -73,7 +73,7 @@ public class AdminDeleteRoomServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
+                response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
             
            else

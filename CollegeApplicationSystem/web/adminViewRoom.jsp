@@ -8,7 +8,6 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
 
 <c:if test="${sessionScope.user == null}">
@@ -50,17 +49,6 @@
     </head>
     <body>
         
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-        <sql:query dataSource="${collegeApplicationData}" var="listRoom">
-            SELECT * from room where collegeID=?;
-            <sql:param value="${param.cid}" />
-        </sql:query>
-        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -76,7 +64,7 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
@@ -95,7 +83,7 @@
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item"><a href="adminViewCollege.jsp">View College</a></li>
+                  <li class="breadcrumb-item"><a href="AdminSelectAllCollegeServlet">View College</a></li>
                   <li class="breadcrumb-item active" aria-current="page">View Room</li>
                </ol>
             </nav>
@@ -115,18 +103,16 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <c:set var="i" value="${1}"/>
-                        <c:forEach items="${listRoom.rows}" var="room">
+                        <c:forEach items="${requestScope.roomList}" var="room" varStatus="loop">
                         <tr>
-                            <td><c:out value="${i}" /></td>
+                            <td><c:out value="${loop.count}" /></td>
                             <td><c:out value="${room.roomName}" /></td>
                             <td><fmt:formatDate value="${room.addedDate}" pattern="dd-MM-yyyy" /></td>
                             <td><c:out value="${room.roomType}" /></td>
                             <td><c:out value="${room.capacity}" /></td>
                             <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="adminEditRoom.jsp?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
+                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
                         </tr>
-                        <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>

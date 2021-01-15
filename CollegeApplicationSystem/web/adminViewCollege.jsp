@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
 <%@ page import="bean.College" %>
 <%@ page import="bean.Room" %>
@@ -45,17 +44,7 @@
              font-size: 3.5rem;
            }
          }
-      </style>
-    <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
-     
-    <sql:query var="listCollege"   dataSource="${collegeApplicationData}">
-        SELECT * FROM college;
-    </sql:query>
+      </style>>
  <link href="css/navbar-top-fixed.css" rel="stylesheet">
     </head>
     <body>
@@ -74,7 +63,7 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
@@ -111,19 +100,17 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <c:set var="i" value="${1}"/>
-                        <c:forEach items="${listCollege.rows}" var="college">
+                        <c:forEach items="${requestScope.collegeList}" var="college" varStatus="loop">
                         <tr>
-                            <td><c:out value="${i}" /></td>
+                            <td><c:out value="${loop.count}" /></td>
                             <td><c:out value="${college.collegeName}" /></td>
                             <td><c:out value="${college.address}" /></td>
                             <td><fmt:formatDate value="${college.addedDate}" pattern="dd-MM-yyyy" /></td>
-                            <td><a href="adminEditCollege.jsp?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
+                            <td><a href="AdminSelectCollegeByIDServlet?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
                                 <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>">Delete</a>
                             </td>
-                            <td><a href="adminViewRoom.jsp?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
+                            <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
                         </tr>
-                        <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>
