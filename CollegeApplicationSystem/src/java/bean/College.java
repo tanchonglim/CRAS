@@ -68,8 +68,24 @@ public class College {
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
     }
+    
+    /**
+     * @return the totalAvailable
+     */
+    public int getTotalAvailable() {
+        return totalAvailable;
+    }
+
+    /**
+     * @param totalAvailable the totalAvailable to set
+     */
+    public void setTotalAvailable(int totalAvailable) {
+        this.totalAvailable = totalAvailable;
+    }
+    
     private int collegeID;
     private String collegeName;
     private String address;
     private Date addedDate;
+    private int totalAvailable;
 }

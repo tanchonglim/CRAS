@@ -87,7 +87,7 @@
                         <c:forEach items="${collegeList}" var="college">
                         <tr>                            
                             <td><c:out value="${college.getCollegeName()}" /></td>
-                            <td><c:out value="" /></td>                            
+                            <td><c:out value="${college.getTotalAvailable()}" /></td>                            
                             <td><a href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />">Select</a></td>
                         </tr>
                         </c:forEach>

@@ -52,6 +52,7 @@ public class StudentSelectCollegeServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatemenSelectAllCollege();
+        jdbcUtility.prepareSQLStatemenSelectAllRoom();
     }     
     
     public void destroy() {   
@@ -71,18 +72,34 @@ public class StudentSelectCollegeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         ArrayList<College> collegeList = new ArrayList<College>();
+        int totalAvailable = 0;       
+        
         try {
             PreparedStatement ps = jdbcUtility.getpsSelectAllCollege();
           
             ResultSet rs = ps.executeQuery();
           
-           while(rs.next()){
+           while(rs.next()){        
                College college = new College();
                college.setCollegeID(rs.getInt(1));
                college.setCollegeName(rs.getString(2));
                collegeList.add(college);
-           }           
+           }
+           
+            for(int i=0; i <collegeList.size();i++){
+                ps = jdbcUtility.getpsSelectAllRoom();
+                rs = ps.executeQuery(); 
+                totalAvailable = 0;
+                while(rs.next()){
+                   if(rs.getInt(3) == collegeList.get(i).getCollegeID()){
+                       totalAvailable += (rs.getInt(6)-rs.getInt(7));
+                   }
+               }         
+               collegeList.get(i).setTotalAvailable(totalAvailable);
+           }
+                      
            request.setAttribute("data",collegeList);
+           
            RequestDispatcher rd = request.getRequestDispatcher("/studentSelectCollege.jsp");
            rd.forward(request, response); 
            
