@@ -14,8 +14,9 @@ import java.util.Date;
  */
 public class Application {
     private int applicationID;
-    private Timestamp applicationDate;
-    private Timestamp processedDate;
+    private Date applicationDate;
+    private Date processedDate;
+    private String applicationDateString;
     private int studentID;
     private int roomID;
     private String status;
@@ -37,28 +38,28 @@ public class Application {
     /**
      * @return the applicationDate
      */
-    public Timestamp getApplicationDate() {
+    public Date getApplicationDate() {
         return applicationDate;
     }
 
     /**
      * @param applicationDate the applicationDate to set
      */
-    public void setApplicationDate(Timestamp applicationDate) {
+    public void setApplicationDate(Date applicationDate) {
         this.applicationDate = applicationDate;
     }
 
     /**
      * @return the processedDate
      */
-    public Timestamp getProcessedDate() {
+    public Date getProcessedDate() {
         return processedDate;
     }
 
     /**
      * @param processedDate the processedDate to set
      */
-    public void setProcessedDate(Timestamp processedDate) {
+    public void setProcessedDate(Date processedDate) {
         this.processedDate = processedDate;
     }
 
@@ -102,5 +103,19 @@ public class Application {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    /**
+     * @return the status
+     */
+    public String getApplicationDateString() {
+        return applicationDateString;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setApplicationDateString(String applicationDateString) {
+        this.applicationDateString = applicationDateString;
     }
 }

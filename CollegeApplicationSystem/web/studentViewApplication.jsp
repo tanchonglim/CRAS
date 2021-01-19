@@ -4,16 +4,20 @@
     Author     : Yeoh Kai Xiang
 --%>
 
+<%@page import="bean.Application"%>
+<%@page import="bean.Room"%>
+<%@page import="bean.College"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.Student" %>
 <%@ page import="jdbc.JDBCUtility" %>
 <%@ page import="javax.servlet.http.HttpSession;" %>
-<%@ page import="java.sql.*" %>
+
+<jsp:useBean id="user" class="bean.User" scope="session" />
+<jsp:useBean id="student" class="bean.Student" scope="session" />
 
 <!DOCTYPE html>
 <html>
@@ -22,11 +26,28 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <title>View Application</title>
         <link href="css/navbar-top-fixed.css" rel="stylesheet"> 
+        <style>
+            table{
+                width: 100%
+            }
+        </style>
     </head>
     <body>
-        <% ResultSet rs = (ResultSet)request.getAttribute("data"); 
+        <% 
+            ArrayList<College> collegeList = (ArrayList<College>)request.getAttribute("college");
+            pageContext.setAttribute("collegeList", collegeList);
+            
+            ArrayList<Room> roomList = (ArrayList<Room>)request.getAttribute("room");
+            pageContext.setAttribute("roomList", roomList);
+            
+            ArrayList<Application> applicationList = (ArrayList<Application>)request.getAttribute("application");
+            pageContext.setAttribute("applicationList", applicationList);
+            
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            String date = formatter.format(rs.getDate(2));
+            for(Application al : applicationList){                
+                String date = formatter.format(al.getApplicationDate());
+                al.setApplicationDateString(date);                
+            }           
         %>
         
             
@@ -42,10 +63,13 @@
 
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
-                    <a class="nav-link active" href="studentHome.jsp">Home </a>
+                    <a class="nav-link" href="studentHome.jsp">Home </a>
+                  </li>                  
+                  <li>
+                     <a class="nav-link active" href="StudentViewApplicationServlet">College Application</a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="studentProfile.jsp">Profile </a>
+                     <a class="nav-link" href="studentProfile.jsp">Profile </a>
                   </li>
                </ul>
                 
@@ -59,40 +83,58 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                   <li class="breadcrumb-item"><a href="studentHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Application</li>
+                  <li class="breadcrumb-item active" aria-current="page">College Application</li>
                </ol>
             </nav>
             
             <div class="card">
                <div class="container">
-                   <div class="row justify-content-md-center">
-                       <p>College Application Record</p>
+                   <div class="row justify-content-md-center" style="margin:10px">
+                       <h3>College Application Record</h3>
                   </div>
-                    <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>Application Date</th>
-                            <th>College</th>
-                            <th>Room Name</th>
-                            <th>Room Type</th>
-                            <th>Status</th>
-                            <th>Processed Date</th>                      
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">                        
-                        <tr>
-                            <td><%= date %></td>
-                            <td><%= rs.getString(15) %></td>
-                            <td><%= rs.getString(8) %></td>
-                            <td><%= rs.getString(11) %></td>
-                            <td><%= rs.getString(6) %></td>
-                            <td><%= rs.getDate(3) %></td>
-                        </tr>
-                    </tbody>
-                </table>
-                        
-                      
+                   <c:choose>
+                        <c:when test="${applicationList.size() > 0}">
+                            <div class="col">
+                            <table class="table table-striped">
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th>Application Date</th>
+                                    <th>College</th>
+                                    <th>Room Name</th>
+                                    <th>Room Type</th>
+                                    <th>Status</th>
+                                    <th>Processed Date</th>                      
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <% for(int i=0; i<applicationList.size(); i++){ %>
+                                    <tr>
+                                        <td><%= applicationList.get(i).getApplicationDateString() %></td>
+                                        <td><%= collegeList.get(i).getCollegeName() %></td>
+                                        <td><%= roomList.get(i).getRoomName() %></td>
+                                        <td><%= roomList.get(i).getRoomType() %></td>
+                                        <td><%= applicationList.get(i).getStatus() %></td>
+                                        <td><%= applicationList.get(i).getProcessedDate() %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                            </table>
+                            </div>
+                   </c:when>
+                         <c:otherwise>
+                            <div class="row justify-content-md-center">No application record</div>
+                        </c:otherwise>
+                    </c:choose>
+                <div class="row justify-content-md-center" style="margin:10px">
+                <c:choose>
+                    <c:when test="${student.application == 1}">
+                        <a class="btn btn-primary disabled" href="studentSelectCollege.jsp" role="button">Apply Now &raquo;</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-primary" href="StudentSelectCollegeServlet" role="button">Apply Now &raquo;</a>
+                    </c:otherwise>
+                </c:choose>
+                </div>
                </div>
             </div>
         </main>

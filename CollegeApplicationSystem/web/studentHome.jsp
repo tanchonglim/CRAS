@@ -57,9 +57,12 @@
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
                     <a class="nav-link active" href="studentHome.jsp">Home </a>
+                  </li>                  
+                  <li>
+                     <a class="nav-link" href="StudentViewApplicationServlet">College Application</a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="studentProfile.jsp">Profile </a>
+                     <a class="nav-link" href="studentProfile.jsp">Profile </a>
                   </li>
                </ul>
                 

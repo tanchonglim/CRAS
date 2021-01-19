@@ -64,10 +64,10 @@
                     <a class="nav-link active" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
+                     <a class="nav-link" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
+                     <a class="nav-link" href="AdminSelectAllApplicationServlet">Application</a>
                   </li>
                </ul>
                 

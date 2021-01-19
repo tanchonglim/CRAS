@@ -24,6 +24,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Apply College</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/navbar-top-fixed.css" rel="stylesheet">
+        <style>
+            table{
+                width: 100%
+            }
+            .card{
+                padding: 4rem 2rem;
+            }
+        </style>
     </head>
     <body>
         <%
@@ -43,7 +52,13 @@
 
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
-                    <a class="nav-link active" href="studentHome.jsp">Home </a>
+                    <a class="nav-link" href="studentHome.jsp">Home </a>
+                  </li>                  
+                  <li>
+                     <a class="nav-link active" href="StudentViewApplicationServlet">College Application</a>
+                  </li>
+                  <li>
+                     <a class="nav-link" href="studentProfile.jsp">Profile </a>
                   </li>
                </ul>
                 
@@ -57,51 +72,49 @@
         
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
-               <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="studentHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Room</li>
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="StudentViewApplicationServlet">College Application</a></li>
+                  <li class="breadcrumb-item"><a href="StudentSelectCollegeServlet">Select College</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Select Room</li>
                </ol>
             </nav>
             <div class="card">
                <div class="container">
-                   
-                   <div class="row justify-content-md-center">
-                       <div class="col col-md-6">
-                           <h3>View Room List</h3>                           
-                        <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
-                        <tr>
-                            <th>Room Name</th>
-                            <th>Room Type</th>
-                            <th>Capacity</th>
-                            <th>Occupied</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-secondary text-center">
-                        <c:forEach items="${roomList}" var="room">
-                            <form action="StudentApplyCollegeRoomServlet" method="POST">
-                            <c:if test="${room.getCapacity() - room.getOccupied() > 0}" >
-                                <tr>            
-                                    <td><c:out value="${room.getRoomName()}" /></td>  
-                                    <td><c:out value="${room.getRoomType()}" /></td>
-                                    <td><c:out value="${room.getCapacity()}" /></td>
-                                    <td><c:out value="${room.getOccupied()}" /></td>
-                                    <td> <button type="submit" class="btn btn-primary align-content-center">Apply</button></td>
-                                </tr>
-                            </c:if>
-                            <input type="hidden" name="occupied" value="${room.getOccupied()}">
-                            <input type="hidden" name="rid"  id="roomID" value="${room.getRoomID()}">
-                            </form>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                           
-                        </div>  
-                    </div>
+                           <h3>Select a Room</h3>                           
+                           <br />
+                    <table class="table table-striped">
+                        <thead class="thead-dark text-center">
+                            <tr>
+                                <th>Room Name</th>
+                                <th>Room Type</th>
+                                <th>Capacity</th>
+                                <th>Occupied</th>
+                                <th>Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <c:forEach items="${roomList}" var="room">
+                                <form action="StudentApplyCollegeRoomServlet" method="POST">
+                                <c:if test="${room.getCapacity() - room.getOccupied() > 0}" >
+                                    <tr>            
+                                        <td><c:out value="${room.getRoomName()}" /></td>  
+                                        <td><c:out value="${room.getRoomType()}" /></td>
+                                        <td><c:out value="${room.getCapacity()}" /></td>
+                                        <td><c:out value="${room.getOccupied()}" /></td>
+                                        <td> <button type="submit" class="btn btn-outline-dark btn-sm m-1">Apply</button></td>
+                                    </tr>
+                                </c:if>
+                                <input type="hidden" name="occupied" value="${room.getOccupied()}">
+                                <input type="hidden" name="rid"  id="roomID" value="${room.getRoomID()}">
+                                </form>
+                            </c:forEach>
+                        </tbody>
+                    </table>                       
                </div>
-            </div>  
-           
+            </div>             
         </main>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="js/popper.min.js"></script>      
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

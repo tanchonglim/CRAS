@@ -48,9 +48,6 @@
         <title>Admin View Application</title>
     </head>
     <body>
-        
-
-        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
          <div class="container">
             <a class="navbar-brand" href="#">CRAS </a>
@@ -63,10 +60,10 @@
 
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
-                    <a class="nav-link active" href="adminHome.jsp">Home </a>
+                    <a class="nav-link" href="adminHome.jsp">Home </a>
                   </li>
                    <li>
-                     <a class="nav-link active" href="adminViewCollege.jsp">College </a>
+                     <a class="nav-link" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>

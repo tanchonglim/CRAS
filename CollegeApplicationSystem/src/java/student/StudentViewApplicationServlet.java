@@ -5,6 +5,9 @@
  */
 package student;
 
+import bean.Application;
+import bean.College;
+import bean.Room;
 import bean.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,6 +70,10 @@ public class StudentViewApplicationServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        ArrayList<College> collegeList = new ArrayList<College>();
+        ArrayList<Room> roomList = new ArrayList<Room>();
+        ArrayList<Application> applicationList = new ArrayList<Application>();
+        
         HttpSession session = request.getSession();
         Student stud = new Student();
         stud  = (Student)session.getAttribute("student");
@@ -78,11 +86,29 @@ public class StudentViewApplicationServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
           
            while(rs.next()){
-               request.setAttribute("data",rs);
-               RequestDispatcher rd = request.getRequestDispatcher("/studentViewApplication.jsp");
-               rd.forward(request, response); 
-               response.sendRedirect(request.getContextPath() + "/studentViewApplication.jsp");
-           }           
+               College college = new College();
+               Room room = new Room();
+               Application application = new Application();
+               
+               application.setApplicationDate(rs.getDate(2));
+               college.setCollegeName(rs.getString(15));
+               room.setRoomName(rs.getString(8));
+               room.setRoomType(rs.getString(11));
+               application.setStatus(rs.getString(6));
+               application.setProcessedDate(rs.getDate(3));
+               
+               collegeList.add(college);
+               roomList.add(room);
+               applicationList.add(application);
+           }                          
+               
+           request.setAttribute("college",collegeList);
+           request.setAttribute("room",roomList);
+           request.setAttribute("application",applicationList);
+           
+           RequestDispatcher rd = request.getRequestDispatcher("/studentViewApplication.jsp");
+           rd.forward(request, response); 
+           response.sendRedirect(request.getContextPath() + "/studentViewApplication.jsp");
            
              response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Fail to view");
         } catch (SQLException ex) {

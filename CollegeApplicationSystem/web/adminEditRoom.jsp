@@ -61,13 +61,13 @@
 
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
-                    <a class="nav-link active" href="adminHome.jsp">Home </a>
+                    <a class="nav-link" href="adminHome.jsp">Home </a>
                   </li>
                   <li>
                      <a class="nav-link active" href="AdminSelectAllCollegeServlet">College </a>
                   </li>
                   <li>
-                     <a class="nav-link active" href="AdminSelectAllApplicationServlet">Application</a>
+                     <a class="nav-link" href="AdminSelectAllApplicationServlet">Application</a>
                   </li>
                </ul>
                 

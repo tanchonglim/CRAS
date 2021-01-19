@@ -24,15 +24,33 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Apply College</title>
+        <link href="css/navbar-top-fixed.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+              }
+
+              @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                  font-size: 3.5rem;
+                }
+              }
+            table{
+                width: 100%
+            }
+            .card{
+                padding: 3rem 2rem;
+            }
+        </style>
     </head>
     <body>
-        <sql:setDataSource
-        var="collegeApplicationData"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost/college_application?allowMultiQueries=true"
-        user="root" password=""
-    />
+       
         <%
             ArrayList<College> collegeList = (ArrayList<College>)request.getAttribute("data");
             pageContext.setAttribute("collegeList", collegeList);
@@ -50,52 +68,59 @@
 
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item ">
-                    <a class="nav-link active" href="adminHome.jsp">Home </a>
+                    <a class="nav-link" href="studentHome.jsp">Home </a>
+                  </li>                  
+                  <li>
+                     <a class="nav-link active" href="StudentViewApplicationServlet">College Application</a>
+                  </li>
+                  <li>
+                     <a class="nav-link" href="studentProfile.jsp">Profile </a>
                   </li>
                </ul>
                 
                 <div class="form-inline mt-2 mt-md-0">
                    <a class="btn btn-danger my-2 my-sm-0"  href="LogoutServlet"> Logout </a>
                </div>
+
             </div>
          </div>
-      </nav>
-              <main role="main" class="container">
+      </nav>     
+        <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                  <li class="breadcrumb-item"><a href="StudentViewApplicationServlet">College Application</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Select College</a></li>
                </ol>
             </nav>
             
-            <div class="jumbotron">
+            <div class="card" style="margin: 10px">
                <div class="container">
-                   <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /></h1>                 
-                  <p>
-                    <!-- <a class="btn btn-primary" href="#" role="button">Apply Now &raquo;</a> -->
-                  </p>
-                  <br/><br/>
-                  <h3 class="display-6">Select a College </h3>
-                <table class="table-light table-bordered">
-                    <thead class="table-primary text-center">
+                   <div style="margin: 10px">
+                       <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /></h1>
+                       <h4 class="display-6">Select a College </h4>
+                  </div>
+                               
+                   <table class="table table-striped">
+                    <thead class="thead-dark text-center">
                         <tr>                            
                             <th>College Name</th>
                             <th>Space left</th>
                             <th>Operation</th>
                         </tr>
                     </thead>
-                    <tbody class="table-secondary text-center">
+                    <tbody class="text-center">
                         <c:forEach items="${collegeList}" var="college">
                         <tr>                            
                             <td><c:out value="${college.getCollegeName()}" /></td>
                             <td><c:out value="${college.getTotalAvailable()}" /></td>                            
-                            <td><a href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />">Select</a></td>
+                            <td><a href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />"><button class="btn btn-outline-dark btn-sm m-1">Select</button></a></td>
                         </tr>
                         </c:forEach>
                     </tbody>
                 </table>
+                </div>
                </div>
-            </div>  
-           
+            </div>
         </main>
     </body>
 </html>
