@@ -72,6 +72,9 @@ public class JDBCUtility {
     //admin select all application
     PreparedStatement psSelectAllApplication = null;
     
+    //admin select all application history
+    PreparedStatement psSelectAllApplicationHistory = null;
+    
     //admin update application approval
     PreparedStatement psUpdateApprovalApplication = null;
 
@@ -503,7 +506,7 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlSelectAllApplication = "SELECT * FROM application";
+            String sqlSelectAllApplication = "SELECT * FROM application WHERE status = 'pending'";
             
             //prepare statement
             psSelectAllApplication  = con.prepareStatement(sqlSelectAllApplication);            
@@ -515,6 +518,24 @@ public class JDBCUtility {
     
     public PreparedStatement getPsSelectAllApplication(){
         return psSelectAllApplication;
+    }
+    
+    public void prepareSQLStatementSelectAllApplicationHistory(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllApplicationHistory = "SELECT * FROM application WHERE status != 'pending'";
+            
+            //prepare statement
+            psSelectAllApplicationHistory  = con.prepareStatement(sqlSelectAllApplicationHistory);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getPsSelectAllApplicationHistory(){
+        return psSelectAllApplicationHistory;
     }
     
     public void prepareSQLStatementUpdateApprovalApplication(){

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : adminViewApplication
-    Created on : Jan 13, 2021, 8:59:44 PM
-    Author     : user
+    Document   : adminViewApplicationHistory
+    Created on : Jan 21, 2021, 11:03:57 AM
+    Author     : Wen Jie
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -46,7 +46,7 @@
 
       <!-- Custom styles for this template -->
       <link href="css/navbar-top-fixed.css" rel="stylesheet">
-        <title>Admin View Application</title>
+        <title>Admin Application History</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -83,7 +83,8 @@
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Applications</li>
+                  <li class="breadcrumb-item"><a href="AdminSelectAllApplicationServlet">View Applications</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Application History</li>
                </ol>
             </nav>
             <div class="card">
@@ -91,21 +92,17 @@
                    
                    <div class="row justify-content-md-center text-center">
                        <div class="col">
-                           <h3>View Application List</h3>
-                           <c:choose>
-                               <c:when test="${requestScope.applicationList.isEmpty()}">
-                                   <br><p>There is no application needed to be processed from students.</p>
-                               </c:when>
-                                   <c:otherwise>
-                                   <table class="table table-striped">
+                           <h3>Application History</h3>
+                          
+                <table class="table table-striped">
                     <thead class="thead-dark text-center">
                         <tr>
                             <th>Application ID</th>
                             <th>Application Date</th>
+                            <th>Processed Date</th>
                             <th>Student ID</th>
                             <th>Room ID</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -113,31 +110,16 @@
                         <tr>
                             <td><c:out value="${application.applicationID}" /></td>
                             <td><fmt:formatDate value="${application.applicationDate}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
+                            <td><fmt:formatDate value="${application.processedDate}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
                             <td><c:out value="${application.studentID}" /></td>
                             <td><c:out value="${application.roomID}" /></td>
                             <td><c:out value="${application.status}" /></td>
-                            <td>
-                                <form action="AdminUpdateApprovalApplicationServlet" method="POST">
-                                  <button name="status" type="submit" value="approved" class="btn btn-outline-dark btn-sm m-1">Approve</button>
-                                  <button name="status" type="submit" value="unapproved" class="btn btn-outline-dark btn-sm m-1">Unapprove</button>
-                                  <input type="hidden" name="applicationID" value="<c:out value="${application.applicationID}" />">
-                                </form>
-                            </td>
                         </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                                   <br/>
+                                                    <br/>
                   <br/><br/>
-                                       </c:otherwise>
-                               
-                           </c:choose>
-                
-                         
-                           
-                   <div class="col text-center" style='padding-bottom: 20px;'>
-                  <a class="btn btn-dark" href="AdminViewApplicationHistoryServlet">View History</a>
-                  </div> 
                         </div>  
                     </div>
                </div>
@@ -150,3 +132,4 @@
       <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
+
