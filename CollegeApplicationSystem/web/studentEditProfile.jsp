@@ -90,9 +90,13 @@
             <div class="card">
                <div class="container">
                    <div class="row justify-content-md-center">
-                       <div class="col col-md-3" style="padding:20px">
-                       <img src="img/${student.imagePath}" class="rounded img-fluid">
-                       </div>
+                      <img src="img/${student.imagePath}" width="200px" class="rounded img-fluid">
+                  </div>
+                  <br>
+                   <div class="row justify-content-md-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileImgFormModel">
+                        Change Profile Image
+                        </button>
                   </div>
                    
                    <div class="row justify-content-md-center">
@@ -141,6 +145,32 @@
                     </div>
                </div>
             </div>  
+                            
+            <div class="modal fade" id="profileImgFormModel" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Profile Image</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                      <form method="post" action="StudentUpdateImageServlet" enctype="multipart/form-data">
+                      <input type="hidden" id="studentID2" name="studentID" value="${student.studentID}">    
+                        <div class="modal-body">
+                            <div id="chosenImg"></div>
+                                Select file to upload:
+                                <input type="file" id="uploadFile" name="uploadFile" />
+                        </div>
+                          
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </form>
+                  </div>
+                </div>
+              </div>                  
            
         </main>
 
@@ -148,5 +178,26 @@
       <script src="js/jquery-3.5.1.min.js"></script>
       <script src="js/popper.min.js"></script>      
       <script src="js/bootstrap.min.js"></script>
+      <script>
+          $("#uploadFile").change(function(e) {
+            for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+                var file = e.originalEvent.srcElement.files[i];
+
+                var img = document.createElement("img");
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                     img.src = reader.result;
+                }
+                reader.readAsDataURL(file);
+                $("#chosenImg").html(img);
+            }
+        });
+        
+        $('#profileImgFormModel').on('hidden.bs.modal', function (e) {
+            $("#chosenImg").empty();
+            $("#uploadFile").val(null);
+          });
+      </script>
     </body>
 </html>

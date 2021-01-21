@@ -31,6 +31,9 @@ public class JDBCUtility {
     //update student profile
     PreparedStatement psUpdateStudentProfile = null;
     
+    //update student profile
+    PreparedStatement psUpdateStudentImage = null;
+    
     //check student password
     PreparedStatement psCheckPassword = null;
     
@@ -240,6 +243,27 @@ public class JDBCUtility {
     
     public PreparedStatement getpsUpdateStudentProfile(){
         return psUpdateStudentProfile;
+    }
+
+
+    //update student image
+    
+    public void prepareSQLStatementUpdateStudentImage(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateStudentImage = "UPDATE student SET imagePath = ? WHERE studentID = ?;";
+            
+            //prepare statement
+            psUpdateStudentImage = con.prepareStatement(sqlUpdateStudentImage);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateStudentImage(){
+        return psUpdateStudentImage;
     }
     
      //update student profile
