@@ -7,7 +7,6 @@
 <%@page import="bean.Application"%>
 <%@page import="bean.Room"%>
 <%@page import="bean.College"%>
-<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -43,11 +42,7 @@
             ArrayList<Application> applicationList = (ArrayList<Application>)request.getAttribute("application");
             pageContext.setAttribute("applicationList", applicationList);
             
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            for(Application al : applicationList){                
-                String date = formatter.format(al.getApplicationDate());
-                al.setApplicationDateString(date);                
-            }           
+       
         %>
         
             
@@ -109,12 +104,12 @@
                             <tbody class="text-center">
                                 <% for(int i=0; i<applicationList.size(); i++){ %>
                                     <tr>
-                                        <td><%= applicationList.get(i).getApplicationDateString() %></td>
+                                        <td><fmt:formatDate value="${applicationList.get(i).getApplicationDate()}" pattern="dd-MM-yyyy hh:mm:ss" /></td>                                        
                                         <td><%= collegeList.get(i).getCollegeName() %></td>
                                         <td><%= roomList.get(i).getRoomName() %></td>
                                         <td><%= roomList.get(i).getRoomType() %></td>
                                         <td><%= applicationList.get(i).getStatus() %></td>
-                                        <td><%= applicationList.get(i).getProcessedDate() %></td>
+                                        <td><fmt:formatDate value="${applicationList.get(i).getProcessedDate()}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
                                     </tr>
                                 <% } %>
                             </tbody>

@@ -105,17 +105,5 @@ public class Application {
         this.status = status;
     }
     
-    /**
-     * @return the status
-     */
-    public String getApplicationDateString() {
-        return applicationDateString;
-    }
 
-    /**
-     * @param status the status to set
-     */
-    public void setApplicationDateString(String applicationDateString) {
-        this.applicationDateString = applicationDateString;
-    }
 }

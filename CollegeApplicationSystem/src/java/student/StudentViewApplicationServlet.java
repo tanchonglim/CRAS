@@ -90,13 +90,15 @@ public class StudentViewApplicationServlet extends HttpServlet {
                Room room = new Room();
                Application application = new Application();
                
-               application.setApplicationDate(rs.getDate(2));
+
                college.setCollegeName(rs.getString(15));
                room.setRoomName(rs.getString(8));
                room.setRoomType(rs.getString(11));
-               application.setStatus(rs.getString(6));
-               application.setProcessedDate(rs.getDate(3));
                
+               application.setApplicationDate(rs.getTimestamp(2));
+               application.setProcessedDate(rs.getTimestamp(3));
+               application.setStatus(rs.getString(6));
+
                collegeList.add(college);
                roomList.add(room);
                applicationList.add(application);
