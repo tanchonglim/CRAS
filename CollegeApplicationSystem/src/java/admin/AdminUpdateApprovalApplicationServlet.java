@@ -45,6 +45,7 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementUpdateApprovalApplication();
+        jdbcUtility.prepareSQLStatementUpdateStudentApplication();
     }     
     
     public void destroy() {   
@@ -66,6 +67,7 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
        //get data from form in adminViewApplication.jsp
         String status = request.getParameter("status");
         int applicationID = Integer.parseInt(request.getParameter("applicationID"));        
+        int studentID = Integer.parseInt(request.getParameter("studentID"));
         
         //update application in database
         try {
@@ -74,10 +76,25 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
             ps.setInt(2, applicationID);
 
           
-           int updateStatus = ps.executeUpdate();
+           int updateApprovalApplicationStatus = ps.executeUpdate();
           
-           if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet");
+           if(updateApprovalApplicationStatus == 1){
+               
+               if(status.equals("unapproved")){
+                    ps = jdbcUtility.getpsUpdateStudentApplication();
+                    ps.setInt(1,0);
+                    ps.setInt(2,studentID);
+                    
+                    //set student application = 0 in student table
+                    int updateStudentApplicationStatus = ps.executeUpdate(); 
+                    
+                    if(updateStudentApplicationStatus == 1) {
+                        response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet");                       
+                    }
+                    else {
+                        response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+                    }
+               }
            }
             
            else

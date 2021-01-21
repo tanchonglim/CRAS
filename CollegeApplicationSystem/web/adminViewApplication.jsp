@@ -121,6 +121,7 @@
                                   <button name="status" type="submit" value="approved" class="btn btn-outline-dark btn-sm m-1">Approve</button>
                                   <button name="status" type="submit" value="unapproved" class="btn btn-outline-dark btn-sm m-1">Unapprove</button>
                                   <input type="hidden" name="applicationID" value="<c:out value="${application.applicationID}" />">
+                                  <input type="hidden" name="studentID" value="<c:out value="${application.studentID}" />">
                                 </form>
                             </td>
                         </tr>
