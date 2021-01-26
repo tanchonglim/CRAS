@@ -99,11 +99,11 @@ public class StudentUpdateProfileServlet extends HttpServlet {
                 student.setMatricNo(matricNo);
                 session.setAttribute("student", student);
                 
-                response.sendRedirect(request.getContextPath() + "/studentProfile.jsp");
+                response.sendRedirect(request.getContextPath() + "/studentProfile.jsp?success=Update success");
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
+             response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp?message=Update failed");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -113,7 +113,7 @@ public class StudentUpdateProfileServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
+            response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp?message=Update failed");
         }
     }
 
