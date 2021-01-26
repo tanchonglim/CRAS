@@ -96,7 +96,6 @@
             <div class="card" style="margin: 10px">
                <div class="container">
                    <div style="margin: 10px">
-                       <h1 class="display-6">Welcome <jsp:getProperty name="user" property="username" /></h1>
                        <h4 class="display-6">Select a College </h4>
                   </div>
                                
@@ -112,8 +111,15 @@
                         <c:forEach items="${collegeList}" var="college">
                         <tr>                            
                             <td><c:out value="${college.getCollegeName()}" /></td>
-                            <td><c:out value="${college.getTotalAvailable()}" /></td>                            
-                            <td><a href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />"><button class="btn btn-outline-dark btn-sm m-1">Select</button></a></td>
+                            <td><c:out value="${college.getTotalAvailable()}" /></td>   
+                            <c:choose>
+                                <c:when test="${college.getTotalAvailable() != 0}">
+                                    <td><a class="btn btn-outline-dark btn-sm m-1" role="button" href="StudentApplyCollegePageServlet?cid=<c:out value="${college.getCollegeID()}" />">Select</a></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td><a class="btn btn-outline-dark btn-sm m-1 disabled" role="button">Select</a></td>
+                                </c:otherwise>
+                            </c:choose>                            
                         </tr>
                         </c:forEach>
                     </tbody>
