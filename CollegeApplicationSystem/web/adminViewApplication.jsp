@@ -88,9 +88,7 @@
             </nav>
             <div class="card">
                <div class="container px-5 pt-5">
-                   
-                   <div class="row justify-content-md-center text-center">
-                       <div class="col">
+                  
                            <h3>View Application List</h3>
                            <c:choose>
                                <c:when test="${requestScope.applicationList.isEmpty()}">
@@ -100,21 +98,26 @@
                                    <table class="table table-striped">
                     <thead class="thead-dark text-center">
                         <tr>
-                            <th>Application ID</th>
+                            <th>No.</th>
                             <th>Application Date</th>
-                            <th>Student ID</th>
-                            <th>Room ID</th>
+                            <th>Student Name</th>
+                            <th>College</th>
+                            <th>Room</th>
+                            <th>Type</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
+                        <c:set var="i" value="${1}"/>
                         <c:forEach items="${requestScope.applicationList}" var="application" varStatus="loop">
                         <tr>
-                            <td><c:out value="${application.applicationID}" /></td>
+                            <td><c:out value="${i}" /></td>
                             <td><fmt:formatDate value="${application.applicationDate}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
-                            <td><c:out value="${application.studentID}" /></td>
-                            <td><c:out value="${application.roomID}" /></td>
+                            <td><c:out value="${application.studentname}" /></td>
+                            <td><c:out value="${application.collegename}" /></td>
+                            <td><c:out value="${application.roomname}" /></td>
+                            <td><c:out value="${application.roomtype}" /></td>
                             <td><c:out value="${application.status}" /></td>
                             <td>
                                 <form action="AdminUpdateApprovalApplicationServlet" method="POST">
@@ -125,11 +128,10 @@
                                 </form>
                             </td>
                         </tr>
+                        <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>
-                                   <br/>
-                  <br/><br/>
                                        </c:otherwise>
                                
                            </c:choose>
@@ -139,8 +141,7 @@
                    <div class="col text-center" style='padding-bottom: 20px;'>
                   <a class="btn btn-dark" href="AdminViewApplicationHistoryServlet">View History</a>
                   </div> 
-                        </div>  
-                    </div>
+                        
                </div>
             </div>  
         </main>

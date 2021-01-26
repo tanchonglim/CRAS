@@ -87,6 +87,10 @@ public class AdminViewApplicationHistoryServlet extends HttpServlet {
                 int studentID = rs.getInt("studentID");
                 int roomID = rs.getInt("roomID");
                 String status = rs.getString("status");
+                String studentname = rs.getString("name");
+                String collegename = rs.getString("collegeName");
+                String roomname = rs.getString("roomName");
+                String roomtype = rs.getString("roomType");
 
                 SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd HH:mm:ss");
                 
@@ -98,6 +102,11 @@ public class AdminViewApplicationHistoryServlet extends HttpServlet {
                 application.setStudentID(studentID);
                 application.setRoomID(roomID);
                 application.setStatus(status);
+                application.setStudentname(studentname);
+                application.setCollegename(collegename);
+                application.setRoomname(roomname);
+                application.setRoomtype(roomtype);
+                
                 
                 applicationList.add(application);
             }

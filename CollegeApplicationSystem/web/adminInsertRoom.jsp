@@ -102,7 +102,7 @@
                          </div>
                          <div class="form-group">
                             <label>Room Type</label>
-                            <select name="roomType" id="roomType" required>
+                            <select name="roomType" id="roomType" onChange="OnSelectedIndexChange()" required>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Double">Double</option>
                                 <option value="Single without Toilet">Single without Toilet</option>
@@ -111,11 +111,7 @@
                          </div>
                          <div class="form-group">
                             <label>Capacity</label>
-                            <input type="number" class="form-control" name="capacity" id="capacity">
-                         </div>
-                         <div class="form-group">
-                            <label>Occupied</label>
-                            <input type="text" class="form-control" name="occupied" id="occupied">
+                            <input type="number" class="form-control" name="capacity" id="capacity" readonly>
                          </div>
                       <div class="col text-center" style='padding-bottom: 20px;'>
                           <button type="submit" class="btn btn-dark align-content-center">Insert</button>
@@ -127,7 +123,17 @@
             </div>  
            
         </main>
-
+        <script>
+            function OnSelectedIndexChange()
+        {
+        if (document.getElementById('roomType').value === "Double"){
+            document.getElementById('capacity').value = 2;
+        }
+        else if (document.getElementById('roomType').value === "Single without Toilet"||document.getElementById('roomType').value === "Single with Toilet"){
+            document.getElementById('capacity').value = 1;
+        }
+        }
+        </script>
       
       <script src="js/jquery-3.5.1.min.js"></script>
       <script src="js/popper.min.js"></script>      

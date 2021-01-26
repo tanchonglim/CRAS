@@ -89,39 +89,46 @@
             </nav>
             <div class="card">
                <div class="container px-5 pt-5">
-                   
-                   <div class="row justify-content-md-center text-center">
-                       <div class="col">
                            <h3>Application History</h3>
                           
+                           <c:choose>
+                               <c:when test="${requestScope.applicationList.isEmpty()}">
+                                   
+                               </c:when>
+                               <c:otherwise>
                 <table class="table table-striped">
                     <thead class="thead-dark text-center">
                         <tr>
-                            <th>Application ID</th>
+                            <th>No.</th>
                             <th>Application Date</th>
                             <th>Processed Date</th>
-                            <th>Student ID</th>
-                            <th>Room ID</th>
+                            <th>Student Name</th>
+                            <th>College</th>
+                            <th>Room</th>
+                            <th>Type</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
+                        <c:set var="i" value="${1}"/>
                         <c:forEach items="${requestScope.applicationList}" var="application" varStatus="loop">
                         <tr>
-                            <td><c:out value="${application.applicationID}" /></td>
+                            <td><c:out value="${i}" /></td>
                             <td><fmt:formatDate value="${application.applicationDate}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
                             <td><fmt:formatDate value="${application.processedDate}" pattern="dd-MM-yyyy hh:mm:ss" /></td>
-                            <td><c:out value="${application.studentID}" /></td>
-                            <td><c:out value="${application.roomID}" /></td>
+                            <td><c:out value="${application.studentname}" /></td>
+                            <td><c:out value="${application.collegename}" /></td>
+                            <td><c:out value="${application.roomname}" /></td>
+                            <td><c:out value="${application.roomtype}" /></td>
                             <td><c:out value="${application.status}" /></td>
                         </tr>
+                        <c:set var="i" value="${i+1}"/>
                         </c:forEach>
                     </tbody>
                 </table>
+                               </c:otherwise>
+                           </c:choose>
                                                     <br/>
-                  <br/><br/>
-                        </div>  
-                    </div>
                </div>
             </div>  
         </main>

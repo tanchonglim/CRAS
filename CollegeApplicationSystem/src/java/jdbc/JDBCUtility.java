@@ -326,7 +326,10 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlSelectAllCollege = "SELECT * FROM room WHERE collegeID = ?;";
+            String sqlSelectAllCollege = "SELECT * "
+                    + "FROM room "
+                    + "JOIN college ON college.collegeID = room.collegeID "
+                    + "WHERE college.collegeID = ?;";
             
             //prepare statement
             psSelectRoomByID  = con.prepareStatement(sqlSelectAllCollege);            
@@ -402,7 +405,7 @@ public class JDBCUtility {
            
             //create SQL statement
             String sqlInsertRoom = "INSERT INTO room(roomName, collegeID, addedDate, roomType, capacity, occupied)" +
-                                   " VALUES(?, ?, NOW(), ?, ?, ?)"; 
+                                   " VALUES(?, ?, NOW(), ?, ?, 0)"; 
             
             //prepare statement
             psInsertRoom = con.prepareStatement(sqlInsertRoom);            
@@ -420,7 +423,8 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlDeleteCollege = "DELETE FROM college WHERE collegeID = ?;";
+            String sqlDeleteCollege = "DELETE FROM college WHERE collegeID = ?;"
+                    + "DELETE FROM room WHERE collegeID = ?;";
             
             //prepare statement
             psDeleteCollege = con.prepareStatement(sqlDeleteCollege);            
@@ -494,7 +498,11 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlUpdateStudentApplication = "UPDATE student SET application = ? WHERE studentID = ?;";
+            String sqlUpdateStudentApplication = "UPDATE student SET application = ? WHERE studentID = ?;"
+                    + "UPDATE room "
+                    + "INNER JOIN application "
+                    + "ON room.roomID = application.roomID "
+                    + "SET occupied = occupied - 1 WHERE occupied > 0 AND application.applicationID = ?";
             
             //prepare statement
             psUpdateStudentApplication = con.prepareStatement(sqlUpdateStudentApplication);            
@@ -530,7 +538,11 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlSelectAllApplication = "SELECT * FROM application WHERE status = 'pending'";
+            String sqlSelectAllApplication = "SELECT * FROM application "
+                    + "JOIN student ON student.studentID = application.studentID "
+                    + "JOIN room ON application.roomID = room.roomID "
+                    + "JOIN college ON room.collegeID = college.collegeID "
+                    + "WHERE status = 'pending'";
             
             //prepare statement
             psSelectAllApplication  = con.prepareStatement(sqlSelectAllApplication);            
@@ -548,7 +560,11 @@ public class JDBCUtility {
         
         try {
             //create SQL statement
-            String sqlSelectAllApplicationHistory = "SELECT * FROM application WHERE status != 'pending'";
+            String sqlSelectAllApplicationHistory = "SELECT * FROM application "
+                    + "JOIN student ON student.studentID = application.studentID "
+                    + "JOIN room ON application.roomID = room.roomID "
+                    + "JOIN college ON room.collegeID = college.collegeID "
+                    + "WHERE status != 'pending'";
             
             //prepare statement
             psSelectAllApplicationHistory  = con.prepareStatement(sqlSelectAllApplicationHistory);            

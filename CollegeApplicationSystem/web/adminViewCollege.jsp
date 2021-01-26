@@ -44,7 +44,7 @@
              font-size: 3.5rem;
            }
          }
-      </style>>
+      </style>
  <link href="css/navbar-top-fixed.css" rel="stylesheet">
     </head>
     <body>
@@ -110,7 +110,7 @@
                                 <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                    
                             </td>
-                            <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
+                            <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>&cname=<c:out value="${college.collegeName}"/>">View Room</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>

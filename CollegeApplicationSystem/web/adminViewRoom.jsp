@@ -89,7 +89,7 @@
             </nav>
             <div class="card">
                <div class="container px-5 pt-5">
-                           <h3>View Room List</h3>
+                   <h3>Room List for <c:out value="${sessionScope.collegeName}"/></h3>
                     <table class="table table-striped">
                     <thead class="table-dark text-center">
                         <tr>

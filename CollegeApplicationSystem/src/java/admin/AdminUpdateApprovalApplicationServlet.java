@@ -84,6 +84,7 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
                     ps = jdbcUtility.getpsUpdateStudentApplication();
                     ps.setInt(1,0);
                     ps.setInt(2,studentID);
+                    ps.setInt(3, applicationID);
                     
                     //set student application = 0 in student table
                     int updateStudentApplicationStatus = ps.executeUpdate(); 
@@ -94,6 +95,9 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
                     else {
                         response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
                     }
+               }
+               else{
+                    response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet");  
                }
            }
             

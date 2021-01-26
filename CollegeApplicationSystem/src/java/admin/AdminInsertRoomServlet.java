@@ -68,7 +68,6 @@ public class AdminInsertRoomServlet extends HttpServlet {
         int cID = Integer.parseInt(request.getParameter("collegeID"));
         String rType = request.getParameter("roomType");
         int capacity = Integer.parseInt(request.getParameter("capacity"));
-        int occupied = Integer.parseInt(request.getParameter("occupied"));
        
         //insert into database
         try {
@@ -77,7 +76,6 @@ public class AdminInsertRoomServlet extends HttpServlet {
             ps.setInt(2, cID);
             ps.setString(3, rType);
             ps.setInt(4, capacity);
-            ps.setInt(5, occupied);
             
            int insertStatus = ps.executeUpdate();
           

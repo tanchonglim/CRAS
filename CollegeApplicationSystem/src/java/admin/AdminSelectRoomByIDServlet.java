@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
 
 /**
@@ -30,7 +31,7 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     @Override
     public void init() throws ServletException
     {
@@ -49,11 +50,11 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatemenSelectRoomByID();
-    }     
-    
-    public void destroy() {   
+    }
+
+    public void destroy() {
         jdbcUtility.jdbcConClose();
-    } 
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,18 +68,19 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int cID = Integer.parseInt(request.getParameter("cid"));
+        String collegeName = request.getParameter("cname");
         //retrieve from database
         try {
             PreparedStatement ps = jdbcUtility.getpsSelectRoomByID();
             ps.setInt(1, cID);
             ResultSet rs = ps.executeQuery();
 
-            
+
             ArrayList roomList = new ArrayList();
-            Room room; 
+            Room room;
 
             while(rs.next()) {
-                
+
                 int roomID = rs.getInt("roomID");
                 String roomName = rs.getString("roomName");
                 int collegeID = rs.getInt("collegeID");
@@ -86,7 +88,7 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
                 String roomType = rs.getString("roomType");
                 int capacity = rs.getInt("capacity");
                 int occupied = rs.getInt("occupied");
-         
+
                 room = new Room();
                 room.setRoomID(roomID);
                 room.setRoomName(roomName);
@@ -95,13 +97,14 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
                 room.setRoomType(roomType);
                 room.setCapacity(capacity);
                 room.setOccupied(occupied);
-                
+
                 roomList.add(room);
             }
-            
+            HttpSession session=request.getSession();
+            session.setAttribute("collegeName", collegeName);
             request.setAttribute("roomList", roomList);
             request.getRequestDispatcher("adminViewRoom.jsp?cid="+cID).forward(request, response);
-         
+
            /*if(insertStatus == 1)
             response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else

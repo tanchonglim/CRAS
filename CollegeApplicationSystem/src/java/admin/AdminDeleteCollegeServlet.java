@@ -70,6 +70,7 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
         try {
             PreparedStatement ps = jdbcUtility.getpsDeleteCollege();
             ps.setInt(1, cID);
+            ps.setInt(2, cID);
 
            int updateStatus = ps.executeUpdate();
 
