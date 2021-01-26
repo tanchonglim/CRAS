@@ -80,7 +80,6 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                   <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">View College</li>
                </ol>
             </nav>
@@ -106,11 +105,11 @@
                             <td><c:out value="${college.collegeName}" /></td>
                             <td><c:out value="${college.address}" /></td>
                             <td><fmt:formatDate value="${college.addedDate}" pattern="dd-MM-yyyy" /></td>
-                            <td><a href="AdminSelectCollegeByIDServlet?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
-                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                            <td><a href="AdminSelectCollegeByIDServlet?cid=<c:out value="${college.collegeID}"/>" class="btn btn-primary btn-sm">Update</a>
+                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a>
                    
                             </td>
-                            <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>&cname=<c:out value="${college.collegeName}"/>">View Room</a></td>
+                            <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>&cname=<c:out value="${college.collegeName}"/>" class="btn btn-info btn-sm">View Room</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>

@@ -82,7 +82,6 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item"><a href="AdminSelectAllCollegeServlet">View College</a></li>
                   <li class="breadcrumb-item active" aria-current="page">View Room</li>
                </ol>
@@ -103,6 +102,11 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
+                        <c:if test="${empty requestScope.roomList}"><tr>
+                            <td colspan="7">No Room Yet</td>
+                        </tr>
+                        </c:if>
+                        
                         <c:forEach items="${requestScope.roomList}" var="room" varStatus="loop">
                         <tr>
                             <td><c:out value="${loop.count}" /></td>
@@ -111,8 +115,8 @@
                             <td><c:out value="${room.roomType}" /></td>
                             <td><c:out value="${room.capacity}" /></td>
                             <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/>
-                                <a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" class="btn btn-primary btn-sm">Update</a>
+                                <a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>

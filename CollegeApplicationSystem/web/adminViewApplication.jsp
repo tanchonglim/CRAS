@@ -82,7 +82,6 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">View Applications</li>
                </ol>
             </nav>
@@ -121,8 +120,8 @@
                             <td><c:out value="${application.status}" /></td>
                             <td>
                                 <form action="AdminUpdateApprovalApplicationServlet" method="POST">
-                                  <button name="status" type="submit" value="approved" class="btn btn-outline-dark btn-sm m-1">Approve</button>
-                                  <button name="status" type="submit" value="unapproved" class="btn btn-outline-dark btn-sm m-1">Unapprove</button>
+                                  <button name="status" type="submit" value="approved" class="btn btn-primary btn-sm m-1">Approve</button>
+                                  <button name="status" type="submit" value="unapproved" class="btn btn-danger btn-sm m-1">Unapprove</button>
                                   <input type="hidden" name="applicationID" value="<c:out value="${application.applicationID}" />">
                                   <input type="hidden" name="studentID" value="<c:out value="${application.studentID}" />">
                                 </form>

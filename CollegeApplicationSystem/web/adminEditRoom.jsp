@@ -82,7 +82,6 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item"><a href="AdminSelectAllCollegeServlet">View College</a></li>
                   <li class="breadcrumb-item"><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${param.cid}"/>">View Room</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Edit Room</li>

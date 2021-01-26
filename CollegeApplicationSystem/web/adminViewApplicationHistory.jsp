@@ -82,7 +82,6 @@
         <main role="main" class="container">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="adminHome.jsp">Home</a></li>
                   <li class="breadcrumb-item"><a href="AdminSelectAllApplicationServlet">View Applications</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Application History</li>
                </ol>
