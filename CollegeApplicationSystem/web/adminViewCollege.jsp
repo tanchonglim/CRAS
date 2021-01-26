@@ -107,7 +107,8 @@
                             <td><c:out value="${college.address}" /></td>
                             <td><fmt:formatDate value="${college.addedDate}" pattern="dd-MM-yyyy" /></td>
                             <td><a href="AdminSelectCollegeByIDServlet?cid=<c:out value="${college.collegeID}"/>">Update</a><br/>
-                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>">Delete</a>
+                                <a href="AdminDeleteCollegeServlet?cid=<c:out value="${college.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                   
                             </td>
                             <td><a href="AdminSelectRoomByIDServlet?cid=<c:out value="${college.collegeID}"/>">View Room</a></td>
                         </tr>

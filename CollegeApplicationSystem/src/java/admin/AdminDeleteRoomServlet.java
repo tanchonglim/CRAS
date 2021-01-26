@@ -73,7 +73,13 @@ public class AdminDeleteRoomServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+               
+                PrintWriter out = response.getWriter();
+
+                out.println("<script>");
+                out.println("alert('Deleted Successfully.');"); 
+                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
+                out.println("</script>");
            }
             
            else

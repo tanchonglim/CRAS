@@ -47,15 +47,15 @@
           <c:choose>
          
             <c:when test = "${sessionScope.user != null && sessionScope.student == null}">
-               <h2>Go <a target="_blank" href="adminHome.jsp">Home!</a></h2>
+               <h2>Go <a href="adminHome.jsp">Home!</a></h2>
             </c:when>
 
             <c:when test = "${sessionScope.user != null && sessionScope.student != null}">
-               <h2>Go <a target="_blank" href="studentHome.jsp">Home!</a></h2>
+               <h2>Go <a href="studentHome.jsp">Home!</a></h2>
             </c:when>
                
             <c:when test = "${sessionScope.user == null}">
-               <h2>Go <a target="_blank" href="login.jsp">Home!</a></h2>
+               <h2>Go <a href="login.jsp">Home!</a></h2>
             </c:when>
 
          </c:choose>

@@ -96,7 +96,7 @@ public class AdminSelectCollegeByIDServlet extends HttpServlet {
             
             request.setAttribute("collegeList", collegeList);
             request.getRequestDispatcher("adminEditCollege.jsp").forward(request, response);
-         
+
            /*if(insertStatus == 1)
             response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else

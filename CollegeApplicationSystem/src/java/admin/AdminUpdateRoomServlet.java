@@ -80,9 +80,14 @@ public class AdminUpdateRoomServlet extends HttpServlet {
             ps.setInt(5, rID);
           
            int updateStatus = ps.executeUpdate();
-          
+           
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+               PrintWriter out = response.getWriter();
+
+                out.println("<script>");
+                out.println("alert('Updated Successfully.');"); 
+                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
+                out.println("</script>");
            }
             
            else

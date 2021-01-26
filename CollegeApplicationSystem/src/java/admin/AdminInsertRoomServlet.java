@@ -81,8 +81,15 @@ public class AdminInsertRoomServlet extends HttpServlet {
             
            int insertStatus = ps.executeUpdate();
           
-           if(insertStatus == 1)
-            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+           if(insertStatus == 1){
+            PrintWriter out = response.getWriter();
+
+             out.println("<script>");
+             out.println("alert('Insert Successfully.');"); 
+             out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
+             out.println("</script>");
+//            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+           }
            else
              response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
         } catch (SQLException ex) {

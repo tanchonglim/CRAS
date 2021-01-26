@@ -32,9 +32,14 @@ public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        PrintWriter out = response.getWriter();
+                
+        out.println("<script>");
+        out.println("alert('Logout Successful.');"); 
+        out.println("location='index.jsp';");
+        out.println("</script>");
         request.getSession().invalidate();
-        response.sendRedirect("index.jsp");
+//        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

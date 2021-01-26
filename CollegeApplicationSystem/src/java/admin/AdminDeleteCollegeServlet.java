@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import jdbc.JDBCUtility;
 
 /**
@@ -69,13 +70,18 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
         try {
             PreparedStatement ps = jdbcUtility.getpsDeleteCollege();
             ps.setInt(1, cID);
-          
+
            int updateStatus = ps.executeUpdate();
-          
+
            if(updateStatus == 1){
-                response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet");
+               PrintWriter out = response.getWriter();
+                
+                out.println("<script>");
+                out.println("alert('Deleted Successfully.');"); 
+                out.println("location='AdminSelectAllCollegeServlet';");
+                out.println("</script>");
            }
-            
+
            else
              response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
         } catch (SQLException ex) {
@@ -83,12 +89,13 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
             while (ex != null) {
                 System.out.println ("SQLState: " + ex.getSQLState ());
                 System.out.println ("Message:  " + ex.getMessage ());
-		System.out.println ("Vendor:   " + ex.getErrorCode ());
+                System.out.println ("Vendor:   " + ex.getErrorCode ());
                 ex = ex.getNextException ();
-		System.out.println ("");
+                System.out.println ("");
             }
             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
         }
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -111,7 +111,8 @@
                             <td><c:out value="${room.roomType}" /></td>
                             <td><c:out value="${room.capacity}" /></td>
                             <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/><a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Delete</a></td>
+                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>">Update</a><br/>
+                                <a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
                         </tr>
                         </c:forEach>
                     </tbody>

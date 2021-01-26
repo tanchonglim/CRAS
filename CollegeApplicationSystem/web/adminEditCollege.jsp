@@ -99,7 +99,7 @@
                          
                          <div class="form-group">
                             <label>College Address</label>
-                            <input type="text" class="form-control"" name="collegeAddress" id="collegeAddress" value="${college.address}">
+                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress" value="${college.address}">
                          </div>
                          <input type="hidden" name="collegeID" id="collegeID" value="${college.collegeID}">
                          </c:forEach>
