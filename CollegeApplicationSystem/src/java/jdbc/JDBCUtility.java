@@ -89,6 +89,8 @@ public class JDBCUtility {
     
     PreparedStatement getpsSelectAllRoom = null;
     
+    PreparedStatement getpsUpdateStudentApplicationStatus = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -666,6 +668,24 @@ public class JDBCUtility {
     
     public PreparedStatement getpsSelectAllRoom(){
         return getpsSelectAllRoom;
+    }
+    
+    public void prepareSQLStatementUpdateStudentApplicationStatus(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateStudentApplicationStatus = "UPDATE student SET application = ? WHERE studentID = ?;";
+            
+            //prepare statement
+            getpsUpdateStudentApplicationStatus = con.prepareStatement(sqlUpdateStudentApplicationStatus);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsUpdateStudentApplicationStatus(){
+        return getpsUpdateStudentApplicationStatus;
     }
 }
 

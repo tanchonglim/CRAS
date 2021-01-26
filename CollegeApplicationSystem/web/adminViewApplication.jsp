@@ -85,6 +85,15 @@
                   <li class="breadcrumb-item active" aria-current="page">View Applications</li>
                </ol>
             </nav>
+            
+            <c:if test="${param.message != null}"> 
+                <div class="alert alert-danger" role="alert"> ${param.message} </div>
+            </c:if>
+ 
+             <c:if test="${param.success != null}"> 
+                <div class="alert alert-success" role="alert"> ${param.success} </div>
+            </c:if>
+            
             <div class="card">
                <div class="container px-5 pt-5">
                   

@@ -51,7 +51,7 @@ public class StudentApplyCollegeRoomServlet extends HttpServlet {
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementInsertApplication();
         jdbcUtility.prepareSQLStatementUpdateRoomOccupied();
-        jdbcUtility.prepareSQLStatementUpdateStudentApplication();
+        jdbcUtility.prepareSQLStatementUpdateStudentApplicationStatus();
     }     
     
     public void destroy() {   
@@ -87,7 +87,7 @@ public class StudentApplyCollegeRoomServlet extends HttpServlet {
                ps.setInt(2, roomID);
                ps.executeUpdate();
                
-               ps = jdbcUtility.getpsUpdateStudentApplication();
+               ps = jdbcUtility.getpsUpdateStudentApplicationStatus();
                ps.setInt(1,1);
                ps.setInt(2,studentID);
                ps.executeUpdate();               
@@ -108,7 +108,7 @@ public class StudentApplyCollegeRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Failed");
+            response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Failed2");
         }
     }
 

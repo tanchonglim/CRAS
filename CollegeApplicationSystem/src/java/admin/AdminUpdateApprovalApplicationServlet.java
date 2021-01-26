@@ -90,19 +90,19 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
                     int updateStudentApplicationStatus = ps.executeUpdate(); 
                     
                     if(updateStudentApplicationStatus == 1) {
-                        response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet");                       
+                        response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet?success=Student application unapproved.");                       
                     }
                     else {
-                        response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+                        response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet?message=Update failed");
                     }
                }
                else{
-                    response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet");  
+                    response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet?success=Student application approved.");  
                }
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet?message=Update failed");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -112,7 +112,7 @@ public class AdminUpdateApprovalApplicationServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectAllApplicationServlet?message=Update failed");
         }
     }
 

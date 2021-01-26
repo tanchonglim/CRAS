@@ -101,7 +101,7 @@ public class StudentApplyCollegePageServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Failedxd");
+            response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Failed");
         }
         
     }
