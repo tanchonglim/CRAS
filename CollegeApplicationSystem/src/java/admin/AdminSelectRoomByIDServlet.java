@@ -104,7 +104,16 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
             session.setAttribute("collegeName", collegeName);
             request.setAttribute("roomList", roomList);
             request.getRequestDispatcher("adminViewRoom.jsp?cid="+cID).forward(request, response);
-
+            
+            if(!request.getParameter("success").equals("")){
+                response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?success=" + request.getParameter("success"));
+            }else if(!request.getParameter("message").equals("")){
+                response.sendRedirect(request.getContextPath() + "/AdminSelectAllRoomByIDServlet?message=" + request.getParameter("message"));
+            }
+            else{
+                response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp");
+            }
+            
            /*if(insertStatus == 1)
             response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else

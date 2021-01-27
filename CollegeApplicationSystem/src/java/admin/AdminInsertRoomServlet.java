@@ -79,17 +79,27 @@ public class AdminInsertRoomServlet extends HttpServlet {
             
            int insertStatus = ps.executeUpdate();
           
+//           if(insertStatus == 1){
+//            PrintWriter out = response.getWriter();
+//
+//             out.println("<script>");
+//             out.println("alert('Insert Successfully.');"); 
+//             out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
+//             out.println("</script>");
+////            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+//           }
+//           else
+//             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+           
            if(insertStatus == 1){
-            PrintWriter out = response.getWriter();
-
-             out.println("<script>");
-             out.println("alert('Insert Successfully.');"); 
-             out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
-             out.println("</script>");
-//            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+               PrintWriter out = response.getWriter();                
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room success."); 
+//               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
+            
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Insert room fail.");
+           
         } catch (SQLException ex) {
             //failed
             while (ex != null) {

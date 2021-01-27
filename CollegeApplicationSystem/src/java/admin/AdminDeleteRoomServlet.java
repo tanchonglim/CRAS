@@ -70,20 +70,18 @@ public class AdminDeleteRoomServlet extends HttpServlet {
             PreparedStatement ps = jdbcUtility.getpsDeleteRoom();
             ps.setInt(1, rID);
           
-           int updateStatus = ps.executeUpdate();
+           int deleteStatus = ps.executeUpdate();
           
-           if(updateStatus == 1){
-               
-                PrintWriter out = response.getWriter();
-
-                out.println("<script>");
-                out.println("alert('Deleted Successfully.');"); 
-                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
-                out.println("</script>");
+           
+          if(deleteStatus == 1){
+               PrintWriter out = response.getWriter();                
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room success."); 
+//               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Delete room fail.");
+
         } catch (SQLException ex) {
             //failed
             while (ex != null) {

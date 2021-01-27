@@ -82,16 +82,13 @@ public class AdminUpdateRoomServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
            
            if(updateStatus == 1){
-               PrintWriter out = response.getWriter();
-
-                out.println("<script>");
-                out.println("alert('Updated Successfully.');"); 
-                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
-                out.println("</script>");
+               PrintWriter out = response.getWriter();                
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update Room success."); 
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Update room fail.");
+           
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
