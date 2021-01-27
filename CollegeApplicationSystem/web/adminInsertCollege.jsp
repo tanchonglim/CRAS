@@ -92,12 +92,12 @@
                         <form action="AdminInsertCollegeServlet" method="POST">
                         <div class="form-group">
                             <label>College Name</label>
-                            <input type="text" class="form-control" name="collegeName" id="collegeName">
+                            <input type="text" class="form-control" name="collegeName" id="collegeName" required>
                          </div>
                          
                          <div class="form-group">
                             <label>College Address</label>
-                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress">
+                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress" required>
                          </div>
                       <div class="col text-center" style='padding-bottom: 20px;'>
                           <button type="submit" class="btn btn-dark align-content-center">Insert</button>

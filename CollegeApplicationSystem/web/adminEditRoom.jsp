@@ -97,7 +97,7 @@
                             <c:forEach items="${requestScope.roomList}" var="room" varStatus="loop">
                         <div class="form-group">
                             <label>Room Name</label>
-                            <input type="text" class="form-control" name="roomName" id="roomName" value="${room.roomName}">
+                            <input type="text" class="form-control" name="roomName" id="roomName" value="${room.roomName}" required>
                          </div>
                          
                          <div class="form-group">
@@ -111,11 +111,11 @@
                          </div>
                          <div class="form-group">
                             <label>Capacity</label>
-                            <input type="text" class="form-control"" name="capacity" id="capacity" value="${room.capacity}">
+                            <input type="text" class="form-control"" name="capacity" id="capacity" value="${room.capacity}" required>
                          </div>
                          <div class="form-group">
                             <label>Occupied</label>
-                            <input type="text" class="form-control"" name="occupied" id="occupied" value="${room.occupied}">
+                            <input type="text" class="form-control"" name="occupied" id="occupied" value="${room.occupied}" required>
                          </div>
                          <input type="hidden" name="roomID" id="roomID" value="${room.roomID}">
                          <input type="hidden" name="collegeID" id="collegeID" value="${room.collegeID}">

@@ -93,11 +93,11 @@
                         <form action="AdminInsertRoomServlet" method="POST">
                         <div class="form-group">
                             <label>Room Name</label>
-                            <input type="text" class="form-control" name="roomName" id="roomName">
+                            <input type="text" class="form-control" name="roomName" id="roomName" required>
                          </div>
                          <div class="form-group">
                             <label>College ID</label>
-                            <input type="text" class="form-control" name="collegeID" id="collegeID" readonly value="<c:out value="${param.cid}" />">
+                            <input type="text" class="form-control" name="collegeID" id="collegeID" readonly value="<c:out value="${param.cid}" />" required>
                          </div>
                          <div class="form-group">
                             <label>Room Type</label>
