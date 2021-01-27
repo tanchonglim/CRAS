@@ -93,12 +93,12 @@
                             <c:forEach items="${requestScope.collegeList}" var="college">
                         <div class="form-group">
                             <label>College Name</label>
-                            <input type="text" class="form-control" name="collegeName" id="collegeName" value="${college.collegeName}">
+                            <input type="text" class="form-control" name="collegeName" id="collegeName" value="${college.collegeName}" required>
                          </div>
                          
                          <div class="form-group">
                             <label>College Address</label>
-                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress" value="${college.address}">
+                            <input type="text" class="form-control" name="collegeAddress" id="collegeAddress" value="${college.address}" required>
                          </div>
                          <input type="hidden" name="collegeID" id="collegeID" value="${college.collegeID}">
                          </c:forEach>

@@ -26,7 +26,7 @@ public class AdminDeleteRoomServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     @Override
     public void init() throws ServletException
     {
@@ -45,9 +45,9 @@ public class AdminDeleteRoomServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementDeleteRoom();
-    }     
-    
-    public void destroy() {   
+    }
+
+    public void destroy() {
         jdbcUtility.jdbcConClose();
     }
     /**
@@ -69,16 +69,16 @@ public class AdminDeleteRoomServlet extends HttpServlet {
         try {
             PreparedStatement ps = jdbcUtility.getpsDeleteRoom();
             ps.setInt(1, rID);
-          
+
            int deleteStatus = ps.executeUpdate();
-          
-           
+
+
           if(deleteStatus == 1){
-               PrintWriter out = response.getWriter();                
-               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room success."); 
+               PrintWriter out = response.getWriter();
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room success.");
 //               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
-            
+
            else
              response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Delete room fail.");
 
@@ -91,7 +91,7 @@ public class AdminDeleteRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room fail.");
         }
     }
 

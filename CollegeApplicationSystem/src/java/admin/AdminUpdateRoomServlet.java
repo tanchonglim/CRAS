@@ -26,7 +26,7 @@ public class AdminUpdateRoomServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     @Override
     public void init() throws ServletException
     {
@@ -45,9 +45,9 @@ public class AdminUpdateRoomServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementUpdateRoom();
-    }     
-    
-    public void destroy() {   
+    }
+
+    public void destroy() {
         jdbcUtility.jdbcConClose();
     }
     /**
@@ -69,7 +69,7 @@ public class AdminUpdateRoomServlet extends HttpServlet {
         int occupied = Integer.parseInt(request.getParameter("occupied"));
         int rID = Integer.parseInt(request.getParameter("roomID"));
         int cID = Integer.parseInt(request.getParameter("collegeID"));
-        
+
         //insert into database
         try {
             PreparedStatement ps = jdbcUtility.getpsUpdateRoom();
@@ -78,17 +78,17 @@ public class AdminUpdateRoomServlet extends HttpServlet {
             ps.setInt(3, capacity);
             ps.setInt(4, occupied);
             ps.setInt(5, rID);
-          
+
            int updateStatus = ps.executeUpdate();
-           
+
            if(updateStatus == 1){
-               PrintWriter out = response.getWriter();                
-               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update Room success."); 
+               PrintWriter out = response.getWriter();
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update Room success.");
            }
-            
+
            else
              response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Update room fail.");
-           
+
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -98,7 +98,7 @@ public class AdminUpdateRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update room fail.");
         }
     }
 

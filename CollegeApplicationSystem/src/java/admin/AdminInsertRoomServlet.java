@@ -26,7 +26,7 @@ public class AdminInsertRoomServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     @Override
     public void init() throws ServletException
     {
@@ -45,11 +45,11 @@ public class AdminInsertRoomServlet extends HttpServlet {
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
         jdbcUtility.prepareSQLStatementInsertRoom();
-    }     
-    
-    public void destroy() {   
+    }
+
+    public void destroy() {
         jdbcUtility.jdbcConClose();
-    } 
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,13 +62,13 @@ public class AdminInsertRoomServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         //get data from form
         String rName = request.getParameter("roomName");
         int cID = Integer.parseInt(request.getParameter("collegeID"));
         String rType = request.getParameter("roomType");
         int capacity = Integer.parseInt(request.getParameter("capacity"));
-       
+
         //insert into database
         try {
             PreparedStatement ps = jdbcUtility.getPsInsertRoom();
@@ -76,30 +76,30 @@ public class AdminInsertRoomServlet extends HttpServlet {
             ps.setInt(2, cID);
             ps.setString(3, rType);
             ps.setInt(4, capacity);
-            
+
            int insertStatus = ps.executeUpdate();
-          
+
 //           if(insertStatus == 1){
 //            PrintWriter out = response.getWriter();
 //
 //             out.println("<script>");
-//             out.println("alert('Insert Successfully.');"); 
+//             out.println("alert('Insert Successfully.');");
 //             out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
 //             out.println("</script>");
 ////            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
 //           }
 //           else
 //             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
-           
+
            if(insertStatus == 1){
-               PrintWriter out = response.getWriter();                
-               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room success."); 
+               PrintWriter out = response.getWriter();
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room success.");
 //               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
-            
+
            else
              response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Insert room fail.");
-           
+
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -109,7 +109,7 @@ public class AdminInsertRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room fail.");
         }
     }
 
