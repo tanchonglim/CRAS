@@ -107,10 +107,10 @@
                                 <option value="Single without Toilet">Single without Toilet</option>
                                 <option value="Single with Toilet">Single with Toilet</option>
                             </select>
-                         </div>
+                         </div>                         
                          <div class="form-group">
                             <label>Capacity</label>
-                            <input type="number" class="form-control" name="capacity" id="capacity" readonly>
+                            <input type="number" min="0" class="form-control" name="capacity" id="capacity" readonly="readonly">
                          </div>
                       <div class="col text-center" style='padding-bottom: 20px;'>
                           <button type="submit" class="btn btn-dark align-content-center">Insert</button>
@@ -124,14 +124,14 @@
         </main>
         <script>
             function OnSelectedIndexChange()
-        {
-        if (document.getElementById('roomType').value === "Double"){
-            document.getElementById('capacity').value = 2;
-        }
-        else if (document.getElementById('roomType').value === "Single without Toilet"||document.getElementById('roomType').value === "Single with Toilet"){
-            document.getElementById('capacity').value = 1;
-        }
-        }
+            {
+            if (document.getElementById('roomType').value === "Double"){
+                document.getElementById('capacity').value = 2;
+            }
+            else if (document.getElementById('roomType').value === "Single without Toilet"||document.getElementById('roomType').value === "Single with Toilet"){
+                document.getElementById('capacity').value = 1;
+            }            
+            }
         </script>
       
       <script src="js/jquery-3.5.1.min.js"></script>

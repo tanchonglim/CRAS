@@ -102,7 +102,7 @@
                          
                          <div class="form-group">
                             <label>Room Type</label><br>
-                            <select name="roomType" id="roomType" required>
+                            <select name="roomType" id="roomType" onChange="OnSelectedIndexChange()" required>
                                 <option disabled value> -- select an option -- </option>
                                 <option <c:if test="${room.roomType.equals('Double')}"> selected </c:if> value="Double">Double</option>
                                 <option <c:if test="${room.roomType.equals('Single without Toilet')}"> selected </c:if> value="Single without Toilet">Single without Toilet</option>
@@ -111,7 +111,7 @@
                          </div>
                          <div class="form-group">
                             <label>Capacity</label>
-                            <input type="number" min="0" class="form-control"" name="capacity" id="capacity" value="${room.capacity}" required>
+                            <input type="number" min="0" class="form-control"" name="capacity" id="capacity" value="${room.capacity}" readonly>
                          </div>
                          <div class="form-group">
                             <label>Occupied</label>
@@ -130,10 +130,19 @@
             </div>  
            
         </main>
-
-      
-      <script src="js/jquery-3.5.1.min.js"></script>
-      <script src="js/popper.min.js"></script>      
-      <script src="js/bootstrap.min.js"></script>
+        <script>
+            function OnSelectedIndexChange()
+        {
+        if (document.getElementById('roomType').value === "Double"){
+            document.getElementById('capacity').value = 2;
+        }
+        else if (document.getElementById('roomType').value === "Single without Toilet"||document.getElementById('roomType').value === "Single with Toilet"){
+            document.getElementById('capacity').value = 1;
+        }
+        }
+        </script>    
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="js/popper.min.js"></script>      
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
