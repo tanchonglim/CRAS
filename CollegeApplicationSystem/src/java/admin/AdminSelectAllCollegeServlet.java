@@ -72,7 +72,6 @@ public class AdminSelectAllCollegeServlet extends HttpServlet {
         try {
             PreparedStatement ps = jdbcUtility.getpsSelectAllCollege();
             ResultSet rs = ps.executeQuery();
-
             
             ArrayList collegeList = new ArrayList();
             College college; 
@@ -82,8 +81,7 @@ public class AdminSelectAllCollegeServlet extends HttpServlet {
                 int cID = rs.getInt("collegeID");
                 String collegeName = rs.getString("collegeName");
                 String address = rs.getString("address");
-                Date addedDate = rs.getDate("addedDate");
-                
+                Date addedDate = rs.getDate("addedDate");                
          
                 college = new College();
                 college.setCollegeID(cID);
@@ -96,7 +94,15 @@ public class AdminSelectAllCollegeServlet extends HttpServlet {
             
             request.setAttribute("collegeList", collegeList);
             request.getRequestDispatcher("adminViewCollege.jsp").forward(request, response);
-         
+            
+            if(!request.getParameter("success").equals("")){
+                response.sendRedirect(request.getContextPath() + "/adminViewCollege.jsp?success=" + request.getParameter("success"));
+            }else if(!request.getParameter("message").equals("")){
+                response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=" + request.getParameter("message"));
+            }
+            else{
+                response.sendRedirect(request.getContextPath() + "/adminViewCollege.jsp");
+            }
            /*if(insertStatus == 1)
             response.sendRedirect(request.getContextPath() + "/adminViewRoom.jsp?cid="+cID);
            else

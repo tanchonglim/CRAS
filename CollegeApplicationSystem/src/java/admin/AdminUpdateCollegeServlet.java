@@ -79,17 +79,12 @@ public class AdminUpdateCollegeServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-               PrintWriter out = response.getWriter();
-                
-                out.println("<script>");
-                out.println("alert('Updated Successfully.');"); 
-                out.println("location='AdminSelectAllCollegeServlet';");
-                out.println("</script>");
-//                response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet");
+               PrintWriter out = response.getWriter();               
+               response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?success=Update college success.");
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminEditCollege.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Update college fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -99,7 +94,7 @@ public class AdminUpdateCollegeServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminEditCollege.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Update college fail.");
         }
     }
 

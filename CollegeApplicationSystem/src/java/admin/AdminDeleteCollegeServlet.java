@@ -75,16 +75,12 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
 
            if(updateStatus == 1){
-               PrintWriter out = response.getWriter();
-                
-                out.println("<script>");
-                out.println("alert('Deleted Successfully.');"); 
-                out.println("location='AdminSelectAllCollegeServlet';");
-                out.println("</script>");
+               PrintWriter out = response.getWriter();                
+               response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?success=Delete college success."); 
            }
 
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Delete college fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -94,7 +90,7 @@ public class AdminDeleteCollegeServlet extends HttpServlet {
                 ex = ex.getNextException ();
                 System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Delete college fail.");
         }
             
     }

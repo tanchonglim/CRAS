@@ -80,14 +80,10 @@ public class AdminInsertCollegeServlet extends HttpServlet {
           
            if(insertStatus == 1){
             PrintWriter out = response.getWriter();
-
-             out.println("<script>");
-             out.println("alert('Insert Successfully.');"); 
-             out.println("location='AdminSelectAllCollegeServlet';");
-             out.println("</script>");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?success=Insert college success.");
            }
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Insert college fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -97,7 +93,7 @@ public class AdminInsertCollegeServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectAllCollegeServlet?message=Insert college fail.");
         }
     }
 

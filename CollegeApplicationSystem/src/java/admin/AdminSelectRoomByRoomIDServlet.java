@@ -72,7 +72,6 @@ public class AdminSelectRoomByRoomIDServlet extends HttpServlet {
             PreparedStatement ps = jdbcUtility.getpsSelectRoomByRoomID();
             ps.setInt(1, rID);
             ResultSet rs = ps.executeQuery();
-
             
             ArrayList roomList = new ArrayList();
             Room room; 
