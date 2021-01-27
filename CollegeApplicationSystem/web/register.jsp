@@ -68,12 +68,12 @@
                 <div class="col-md-5">
                     <div class="jumbotron">
                         <div class="container">
-                          <h1 class="display-3">Hello, world!</h1>
+                          <h1 class="display-3">Sign Up</h1>
                           <p>
                              This system is only for student who has registered with our University.
                           </p>
                           <p>
-                             <a class="btn btn-primary " href="#" role="button">Learn more &raquo;</a>
+                             <a class="btn btn-primary " target="_blank" href="https://www.utm.my/campuslife/" role="button">Learn more &raquo;</a>
                           </p>
                        </div>
                      </div>

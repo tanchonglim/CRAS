@@ -101,7 +101,7 @@
                                         <td><c:out value="${room.getRoomType()}" /></td>
                                         <td><c:out value="${room.getCapacity()}" /></td>
                                         <td><c:out value="${room.getOccupied()}" /></td>
-                                        <td> <button type="submit" class="btn btn-outline-dark btn-sm m-1">Apply</button></td>
+                                        <td> <button type="submit" onclick="return confirm('Are you sure you want to apply this room?')" class="btn btn-outline-dark btn-sm m-1">Apply</button></td>
                                     </tr>
                                 </c:if>
                                 <input type="hidden" name="occupied" value="${room.getOccupied()}">

@@ -62,11 +62,13 @@
             <div class="container">
                <h1 class="display-3">Welcome to CRAS </h1>
                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+                   UTM provides 14,578 accommodation at 10 residential colleges in Johor Bahru campus.
                </p>
                <p>
-                  <a class="btn btn-primary" href="#" role="button">Learn more &raquo;</a>
+                  Login now to view and apply rooms offered by collages around the campus with room types ranging from single with bathroom, single room and double room.
+               </p>
+               <p>
+                  <a class="btn btn-primary" target="_blank" href="http://engineering.utm.my/biomedical/wp-content/uploads/sites/14/2017/03/Circular-College-Version-BI-20172018-1.pdf" role="button">Learn more &raquo;</a>
                </p>
             </div>
          </div>       

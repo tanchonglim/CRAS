@@ -129,8 +129,8 @@
                             <td><c:out value="${application.status}" /></td>
                             <td>
                                 <form action="AdminUpdateApprovalApplicationServlet" method="POST">
-                                  <button name="status" type="submit" value="approved" class="btn btn-primary btn-sm m-1">Approve</button>
-                                  <button name="status" type="submit" value="unapproved" class="btn btn-danger btn-sm m-1">Unapprove</button>
+                                  <button name="status" type="submit" value="approved" onclick="return confirm('Are you sure you want to approve this application?')" class="btn btn-primary btn-sm m-1">Approve</button>
+                                  <button name="status" type="submit" value="unapproved" onclick="return confirm('Are you sure you want to unapprove this application?')" class="btn btn-danger btn-sm m-1">Unapprove</button>
                                   <input type="hidden" name="applicationID" value="<c:out value="${application.applicationID}" />">
                                   <input type="hidden" name="studentID" value="<c:out value="${application.studentID}" />">
                                 </form>
