@@ -73,17 +73,11 @@ public class AdminDeleteRoomServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-               
-                PrintWriter out = response.getWriter();
-
-                out.println("<script>");
-                out.println("alert('Deleted Successfully.');"); 
-                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
-                out.println("</script>");
+                response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room success.");
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -93,7 +87,7 @@ public class AdminDeleteRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room fail.");
         }
     }
 

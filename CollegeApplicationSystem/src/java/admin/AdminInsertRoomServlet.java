@@ -86,10 +86,10 @@ public class AdminInsertRoomServlet extends HttpServlet {
              out.println("alert('Insert Successfully.');"); 
              out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
              out.println("</script>");
-//            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room success.");
            }
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -99,7 +99,7 @@ public class AdminInsertRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Insert room fail.");
         }
     }
 

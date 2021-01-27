@@ -111,11 +111,11 @@
                          </div>
                          <div class="form-group">
                             <label>Capacity</label>
-                            <input type="text" class="form-control"" name="capacity" id="capacity" value="${room.capacity}" required>
+                            <input type="number" min="0" class="form-control"" name="capacity" id="capacity" value="${room.capacity}" required>
                          </div>
                          <div class="form-group">
                             <label>Occupied</label>
-                            <input type="text" class="form-control"" name="occupied" id="occupied" value="${room.occupied}" required>
+                            <input type="number" min="0" class="form-control"" name="occupied" id="occupied" value="${room.occupied}" required>
                          </div>
                          <input type="hidden" name="roomID" id="roomID" value="${room.roomID}">
                          <input type="hidden" name="collegeID" id="collegeID" value="${room.collegeID}">

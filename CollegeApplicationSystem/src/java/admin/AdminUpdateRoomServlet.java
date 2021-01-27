@@ -82,16 +82,11 @@ public class AdminUpdateRoomServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
            
            if(updateStatus == 1){
-               PrintWriter out = response.getWriter();
-
-                out.println("<script>");
-                out.println("alert('Updated Successfully.');"); 
-                out.println("location='AdminSelectRoomByIDServlet?cid="+cID +"';");
-                out.println("</script>");
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update room success.");
            }
             
            else
-             response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update room fail.");
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -101,7 +96,7 @@ public class AdminUpdateRoomServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/adminHome.jsp");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Update room fail.");
         }
     }
 
