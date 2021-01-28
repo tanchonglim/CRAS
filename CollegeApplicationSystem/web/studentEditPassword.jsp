@@ -81,12 +81,15 @@
         <main role="main" class="container">
         <nav aria-label="breadcrumb">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="studentHome.jsp">Home</a></li>
                   <li class="breadcrumb-item"><a href="studentProfile.jsp">Profile</a></li>
                   <li class="breadcrumb-item"><a href="studentEditProfile.jsp">Edit Profile</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Edit User Password</li>
                </ol>
             </nav>
+            
+            <c:if test="${param.msg != null}"> 
+                <div class="alert alert-danger" role="alert"> ${param.msg} </div>
+            </c:if>
             
             <div class="card">
                <div class="container">

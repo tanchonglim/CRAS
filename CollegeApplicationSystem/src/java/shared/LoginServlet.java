@@ -91,7 +91,7 @@ public class LoginServlet extends HttpServlet {
                 String username = selectResult.getString("username");
                 String email = selectResult.getString("email");
                 java.sql.Date addedDate = selectResult.getDate("addedDate");
-                int studentID = Integer.parseInt(selectResult.getString("studentID"));
+                int studentID = Integer.parseInt(selectResult.getString("studentID")==null?"-1":selectResult.getString("studentID"));
                 String userType = selectResult.getString("userType");
                 String salt = selectResult.getString("salt");
                 String hashedPassword = selectResult.getString("password");

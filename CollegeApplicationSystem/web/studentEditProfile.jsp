@@ -90,8 +90,8 @@
                 <div class="alert alert-danger" role="alert"> ${param.message} </div>
             </c:if>
  
-             <c:if test="${param.success != null}"> 
-                <div class="alert alert-success" role="alert"> ${param.success} </div>
+             <c:if test="${param.msg != null}"> 
+                <div class="alert alert-success" role="alert"> ${param.msg} </div>
             </c:if>
             
             <div class="card">

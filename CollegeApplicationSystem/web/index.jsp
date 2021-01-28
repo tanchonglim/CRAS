@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,10 +58,20 @@
             </div>
          </div>
       </nav>     
+        
+        
+        
+        
         <main role="main" class="container">
-             <div class="jumbotron">
+            <c:if test="${param.success != null}"> 
+                <div class="alert alert-success" role="alert"> ${param.success} </div>
+            </c:if> 
+            
+            <div class="jumbotron">
             <div class="container">
                <h1 class="display-3">Welcome to CRAS </h1>
+               <h3>(College Room Application System)</h3>
+               <br>
                <p>
                    UTM provides 14,578 accommodation at 10 residential colleges in Johor Bahru campus.
                </p>

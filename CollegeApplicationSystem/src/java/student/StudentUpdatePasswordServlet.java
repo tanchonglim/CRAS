@@ -90,12 +90,12 @@ public class StudentUpdatePasswordServlet extends HttpServlet {
                     int insertStatus = ps1.executeUpdate();
           
                     if(insertStatus == 1)
-                     response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp");
+                     response.sendRedirect(request.getContextPath() + "/studentEditProfile.jsp?msg=Update Password Sucessfully");
                     else
                       response.sendRedirect(request.getContextPath() + "/register.jsp?message=Failed");
                 }
                 else
-                    response.sendRedirect(request.getContextPath() + "/studentEditPassword.jsp?msg=WrongPassword");
+                    response.sendRedirect(request.getContextPath() + "/studentEditPassword.jsp?msg=Wrong Password");
            }            
         } catch (SQLException ex) {
             //failed
