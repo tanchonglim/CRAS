@@ -87,11 +87,11 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`roomID`, `roomName`, `collegeID`, `addedDate`, `roomType`, `capacity`, `occupied`) VALUES
-(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 2, 1),
+(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 1, 1),
 (2, '301', 1, '2021-01-11 20:47:21', 'Single with Toilet', 1, 0),
-(3, '202', 5, '2021-01-12 01:33:03', 'Double', 2, 0),
-(4, '303', 6, '2021-01-12 01:33:26', 'Single without Toilet', 22, 0),
-(5, '401', 1, '2021-01-13 12:06:34', 'Double', 1, 0);
+(3, '202', 2, '2021-01-12 01:33:03', 'Double', 2, 0),
+(4, '303', 3, '2021-01-12 01:33:26', 'Single without Toilet', 1, 0),
+(5, '401', 1, '2021-01-13 12:06:34', 'Double', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`studentID`, `name`, `matricNo`, `imagePath`, `application`) VALUES
-(1, 'User 1', 'user111', 'default.png', 0);
+(1, 'User 1', 'user111', 'default.png', 1);
 
 -- --------------------------------------------------------
 
