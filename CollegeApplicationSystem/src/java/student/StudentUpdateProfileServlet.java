@@ -69,6 +69,13 @@ public class StudentUpdateProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
+        
        //get data from form
         String name = request.getParameter("name");
         String matricNo = request.getParameter("matricNo");
@@ -87,8 +94,6 @@ public class StudentUpdateProfileServlet extends HttpServlet {
            int updateStatus = ps.executeUpdate();
           
            if(updateStatus == 1){
-               HttpSession session = request.getSession();
-        
                 //get user profile bean from session
                 User user = (User)session.getAttribute("user");
                 user.setEmail(email);

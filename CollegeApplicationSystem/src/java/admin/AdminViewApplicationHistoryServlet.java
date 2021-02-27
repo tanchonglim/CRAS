@@ -5,6 +5,7 @@
  */
 package admin;
 
+import bean.User;
 import bean.Application;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
 
 /**
@@ -69,6 +71,12 @@ public class AdminViewApplicationHistoryServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
        try {
+            HttpSession session = request.getSession();
+            if(session.getAttribute("user") == null||!((User) session.getAttribute("user")).getUserType().equals("admin")){
+                response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+                return;
+            }
+           
             PreparedStatement ps = jdbcUtility.getPsSelectAllApplicationHistory();
             ResultSet rs = ps.executeQuery();
 

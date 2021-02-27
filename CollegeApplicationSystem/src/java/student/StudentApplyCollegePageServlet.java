@@ -69,7 +69,11 @@ public class StudentApplyCollegePageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
         int collegeID = Integer.parseInt(request.getParameter("cid"));
         try {
             ArrayList<Room> roomList = new ArrayList<Room>();

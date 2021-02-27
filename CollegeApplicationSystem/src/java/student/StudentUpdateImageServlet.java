@@ -84,7 +84,11 @@ public class StudentUpdateImageServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
         // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
             // if not, we stop here
@@ -145,9 +149,7 @@ public class StudentUpdateImageServlet extends HttpServlet {
                         ps.setString(2, studentID);
                         int updateStatus = ps.executeUpdate();
                         
-                        if(updateStatus == 1){
-                            HttpSession session = request.getSession();
-                            
+                        if(updateStatus == 1){                            
                              //update current student profile image
                              Student student = (Student)session.getAttribute("student");
                              student.setImagePath(fileName);

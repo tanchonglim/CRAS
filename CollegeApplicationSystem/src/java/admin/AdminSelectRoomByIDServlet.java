@@ -6,6 +6,7 @@
 package admin;
 
 import bean.Room;
+import bean.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -67,6 +68,12 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||!((User) session.getAttribute("user")).getUserType().equals("admin")){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
+        
         int cID = Integer.parseInt(request.getParameter("cid"));
         String collegeName = "";
         if(request.getParameter("cname") != null){
@@ -104,7 +111,6 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
 
                 roomList.add(room);
             }
-            HttpSession session=request.getSession();
             session.setAttribute("collegeName", collegeName);
             request.setAttribute("roomList", roomList);
             request.getRequestDispatcher("adminViewRoom.jsp?cid="+cID).forward(request, response);

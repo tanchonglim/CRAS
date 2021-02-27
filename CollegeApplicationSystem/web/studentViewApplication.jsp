@@ -18,6 +18,10 @@
 <jsp:useBean id="user" class="bean.User" scope="session" />
 <jsp:useBean id="student" class="bean.Student" scope="session" />
 
+<c:if test="${sessionScope.user == null || sessionScope.student == null }">
+    <c:redirect url="/notAuthorized.jsp" />   
+</c:if>
+
 <!DOCTYPE html>
 <html>
     <head>

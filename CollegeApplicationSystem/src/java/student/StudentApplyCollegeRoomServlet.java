@@ -62,8 +62,11 @@ public class StudentApplyCollegeRoomServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession();        
-        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
         Student stud = new Student();
         stud  = (Student)session.getAttribute("student");
         int studentID = stud.getStudentID();

@@ -75,6 +75,10 @@ public class StudentViewApplicationServlet extends HttpServlet {
         ArrayList<Application> applicationList = new ArrayList<Application>();
         
         HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
         Student stud = new Student();
         stud  = (Student)session.getAttribute("student");
         int studentID = stud.getStudentID();

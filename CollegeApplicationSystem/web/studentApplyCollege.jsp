@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ page import="bean.User" %>
 
-<c:if test="${sessionScope.user == null}">
+<c:if test="${sessionScope.user == null || sessionScope.student == null}">
     <c:redirect url="/notAuthorized.jsp" />   
 </c:if>
 

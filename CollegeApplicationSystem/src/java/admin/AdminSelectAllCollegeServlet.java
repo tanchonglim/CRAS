@@ -6,6 +6,7 @@
 package admin;
 
 import bean.College;
+import bean.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -21,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
 
 /**
@@ -68,6 +70,12 @@ public class AdminSelectAllCollegeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||!((User) session.getAttribute("user")).getUserType().equals("admin")){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
+        
         //retrieve from database
         try {
             PreparedStatement ps = jdbcUtility.getpsSelectAllCollege();

@@ -64,6 +64,12 @@ public class AdminUpdateCollegeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null||!((User) session.getAttribute("user")).getUserType().equals("admin")){
+            response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
+            return;
+        }
        //get data from form
         String cName = request.getParameter("collegeName");
         String cAddress = request.getParameter("collegeAddress");
