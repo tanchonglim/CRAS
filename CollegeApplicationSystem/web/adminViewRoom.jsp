@@ -113,7 +113,7 @@
                     </thead>
                     <tbody class="text-center">
                         <c:if test="${empty requestScope.roomList}"><tr>
-                            <td colspan="7">No Room Yet</td>
+                            <td colspan="8">No Room Inserted</td>
                         </tr>
                         </c:if>
                         
