@@ -91,6 +91,12 @@ public class JDBCUtility {
     
     PreparedStatement getpsUpdateStudentApplicationStatus = null;
     
+    PreparedStatement psSelectActivatedRoomByID = null;
+    
+    PreparedStatement psDeactivateRoomByID = null;
+    
+    PreparedStatement psActivateRoomByID = null;
+    
       //use this constructor if using ConnectionPool
     public JDBCUtility()
     {
@@ -345,6 +351,27 @@ public class JDBCUtility {
         return psSelectRoomByID;
     }
     
+    public void prepareSQLStatemenSelectActivatedRoomByID(){
+        
+        try {
+            //create SQL statement
+            String sqlSelectAllCollege = "SELECT * "
+                    + "FROM room "
+                    + "JOIN college ON college.collegeID = room.collegeID "
+                    + "WHERE college.collegeID = ? AND activated = 1;";
+            
+            //prepare statement
+            psSelectActivatedRoomByID  = con.prepareStatement(sqlSelectAllCollege);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsSelectActivatedRoomByID(){
+        return psSelectActivatedRoomByID;
+    }
+    
     public void prepareSQLStatementUpdateCollege(){
         
         try {
@@ -380,6 +407,44 @@ public class JDBCUtility {
     public PreparedStatement getpsUpdateRoom(){
         return psUpdateRoom;
     }
+    
+    public void prepareSQLStatementActivateRoomByID(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateRoom = "UPDATE room SET activated = 1 WHERE roomID = ?;";
+            
+            //prepare statement
+            psActivateRoomByID = con.prepareStatement(sqlUpdateRoom);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsActivateRoomByID(){
+        return psActivateRoomByID;
+    }
+    
+    public void prepareSQLStatementDeactivateRoomByID(){
+        
+        try {
+            //create SQL statement
+            String sqlUpdateRoom = "UPDATE room SET activated = 0 WHERE roomID = ?;";
+            
+            //prepare statement
+            psDeactivateRoomByID = con.prepareStatement(sqlUpdateRoom);            
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace ();
+        }
+    }
+    
+    public PreparedStatement getpsDeactivateRoomByID(){
+        return psDeactivateRoomByID;
+    }
+    
+    
     
     public void prepareSQLStatementInsertCollege(){
         

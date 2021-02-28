@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2021 at 11:42 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.32
+-- Generation Time: Feb 28, 2021 at 05:10 AM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -78,20 +77,21 @@ CREATE TABLE `room` (
   `collegeID` int(11) NOT NULL,
   `addedDate` datetime NOT NULL,
   `roomType` varchar(255) NOT NULL,
+  `activated` tinyint(1) NOT NULL DEFAULT '1',
   `capacity` int(11) NOT NULL,
-  `occupied` int(11) NOT NULL DEFAULT 0
+  `occupied` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`roomID`, `roomName`, `collegeID`, `addedDate`, `roomType`, `capacity`, `occupied`) VALUES
-(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 1, 1),
-(2, '301', 1, '2021-01-11 20:47:21', 'Single with Toilet', 1, 0),
-(3, '202', 2, '2021-01-12 01:33:03', 'Double', 2, 0),
-(4, '303', 3, '2021-01-12 01:33:26', 'Single without Toilet', 1, 0),
-(5, '401', 1, '2021-01-13 12:06:34', 'Double', 2, 0);
+INSERT INTO `room` (`roomID`, `roomName`, `collegeID`, `addedDate`, `roomType`, `activated`, `capacity`, `occupied`) VALUES
+(1, '201', 1, '2021-01-11 14:26:31', 'Single without Toilet', 1, 1, 1),
+(2, '301', 1, '2021-01-11 20:47:21', 'Single with Toilet', 1, 1, 0),
+(3, '202', 2, '2021-01-12 01:33:03', 'Double', 1, 2, 0),
+(4, '303', 3, '2021-01-12 01:33:26', 'Single without Toilet', 1, 1, 0),
+(5, '401', 1, '2021-01-13 12:06:34', 'Double', 1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `student` (
   `name` varchar(255) NOT NULL,
   `matricNo` varchar(255) NOT NULL,
   `imagePath` varchar(255) NOT NULL DEFAULT 'default.png',
-  `application` int(11) NOT NULL DEFAULT 0
+  `application` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
-  `addedDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `addedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userType` varchar(255) NOT NULL DEFAULT 'student',
   `studentID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -182,30 +182,27 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `application`
 --
 ALTER TABLE `application`
-  MODIFY `applicationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `applicationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `college`
 --
 ALTER TABLE `college`
   MODIFY `collegeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
   MODIFY `roomID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
   MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -97,6 +97,7 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
                 int collegeID = rs.getInt("collegeID");
                 Date addedDate = rs.getDate("addedDate");
                 String roomType = rs.getString("roomType");
+                int activated = rs.getInt("activated");
                 int capacity = rs.getInt("capacity");
                 int occupied = rs.getInt("occupied");
 
@@ -106,6 +107,7 @@ public class AdminSelectRoomByIDServlet extends HttpServlet {
                 room.setCollegeID(collegeID);
                 room.setAddedDate(addedDate);
                 room.setRoomType(roomType);
+                room.setActivated(activated);
                 room.setCapacity(capacity);
                 room.setOccupied(occupied);
 

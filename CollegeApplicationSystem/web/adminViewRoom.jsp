@@ -105,6 +105,7 @@
                             <th>Room Name</th>
                             <th>Added Date</th>
                             <th>Room Type</th>
+                            <th>Activation</th>
                             <th>Capacity</th>
                             <th>Occupied</th>
                             <th>Operation</th>
@@ -122,10 +123,29 @@
                             <td><c:out value="${room.roomName}" /></td>
                             <td><fmt:formatDate value="${room.addedDate}" pattern="dd-MM-yyyy" /></td>
                             <td><c:out value="${room.roomType}" /></td>
+                            <td>
+                            <c:if test="${room.activated == 1}">
+                                    Activated
+                            </c:if>
+                            <c:if test="${room.activated == 0}">
+                                    Deactivated
+                            </c:if>
+                            </td>
                             <td><c:out value="${room.capacity}" /></td>
                             <td><c:out value="${room.occupied}" /></td>
-                            <td><a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" class="btn btn-primary btn-sm">Update</a>
-                                <a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td>
+                            <a href="AdminSelectRoomByRoomIDServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" class="btn btn-primary btn-sm">Update</a>
+                            <a href="AdminDeleteRoomServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</a>
+                             <a href="AdminChangeRoomActivationServlet?rid=<c:out value="${room.roomID}"/>&cid=<c:out value="${room.collegeID}"/>&activated=<c:out value="${room.activated}"/>" class="btn btn-warning btn-sm">
+                                <c:if test="${room.activated == 0}">
+                                    Activate
+                                </c:if>
+                                <c:if test="${room.activated == 1}">
+                                        Deactivate
+                                </c:if>
+                             </a>
+                           
+                            </td>
                         </tr>
                         </c:forEach>
                     </tbody>

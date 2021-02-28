@@ -51,7 +51,7 @@ public class StudentApplyCollegePageServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatemenSelectRoomByID();
+        jdbcUtility.prepareSQLStatemenSelectActivatedRoomByID();
     }     
     
     public void destroy() {   
@@ -77,7 +77,7 @@ public class StudentApplyCollegePageServlet extends HttpServlet {
         int collegeID = Integer.parseInt(request.getParameter("cid"));
         try {
             ArrayList<Room> roomList = new ArrayList<Room>();
-            PreparedStatement ps = jdbcUtility.getpsSelectRoomByID();
+            PreparedStatement ps = jdbcUtility.getpsSelectActivatedRoomByID();
           
             ps.setInt(1, collegeID);
             ResultSet rs = ps.executeQuery();
@@ -87,8 +87,8 @@ public class StudentApplyCollegePageServlet extends HttpServlet {
                room.setRoomID(rs.getInt(1));
                room.setRoomName(rs.getString(2));
                room.setRoomType(rs.getString(5));
-               room.setCapacity(rs.getInt(6));
-               room.setOccupied(rs.getInt(7));
+               room.setCapacity(rs.getInt(7));
+               room.setOccupied(rs.getInt(8));
                roomList.add(room);
            }           
            request.setAttribute("data",roomList);

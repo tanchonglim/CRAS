@@ -14,6 +14,20 @@ import java.util.Date;
 public class Room {
 
     /**
+     * @return the activated
+     */
+    public int getActivated() {
+        return activated;
+    }
+
+    /**
+     * @param activated the activated to set
+     */
+    public void setActivated(int activated) {
+        this.activated = activated;
+    }
+
+    /**
      * @return the roomID
      */
     public int getRoomID() {
@@ -115,6 +129,7 @@ public class Room {
     private int collegeID;
     private Date addedDate;
     private String roomType;
+    private int activated;
     private int capacity;
     private int occupied;
 }

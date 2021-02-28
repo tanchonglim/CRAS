@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package student;
+package admin;
 
-import bean.Student;
+import bean.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,20 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
-import bean.College;
-import java.util.ArrayList;
-
 
 /**
  *
- * @author USER
+ * @author Wen Jie
  */
-@WebServlet(name = "StudentSelectCollegeServlet", urlPatterns = {"/StudentSelectCollegeServlet"})
-public class StudentSelectCollegeServlet extends HttpServlet {
+@WebServlet(name = "AdminChangeRoomActivationServlet", urlPatterns = {"/AdminChangeRoomActivationServlet"})
+public class AdminChangeRoomActivationServlet extends HttpServlet {
 
-    private JDBCUtility jdbcUtility;
+     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     @Override
     public void init() throws ServletException
     {
@@ -51,11 +46,11 @@ public class StudentSelectCollegeServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        jdbcUtility.prepareSQLStatemenSelectAllCollege();
-        jdbcUtility.prepareSQLStatemenSelectAllRoom();
-    }     
-    
-    public void destroy() {   
+        jdbcUtility.prepareSQLStatementDeactivateRoomByID();
+        jdbcUtility.prepareSQLStatementActivateRoomByID();
+    }
+
+    public void destroy() {
         jdbcUtility.jdbcConClose();
     }
     /**
@@ -70,44 +65,41 @@ public class StudentSelectCollegeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession();
-        if(session.getAttribute("user") == null||session.getAttribute("student") == null){
+        if(session.getAttribute("user") == null||!((User) session.getAttribute("user")).getUserType().equals("admin")){
             response.sendRedirect(request.getContextPath() + "/notAuthorized.jsp");
             return;
         }
-        ArrayList<College> collegeList = new ArrayList<College>();
-        int totalAvailable = 0;       
         
+        //get data from form
+        int rID = Integer.parseInt(request.getParameter("rid"));
+        int cID = Integer.parseInt(request.getParameter("cid"));
+        int activated = Integer.parseInt(request.getParameter("activated"));
+        //insert into database
         try {
-            PreparedStatement ps = jdbcUtility.getpsSelectAllCollege();
-          
-            ResultSet rs = ps.executeQuery();
-          
-           while(rs.next()){        
-               College college = new College();
-               college.setCollegeID(rs.getInt(1));
-               college.setCollegeName(rs.getString(2));
-               collegeList.add(college);
+            PreparedStatement ps = null;
+            if(activated == 1){
+                ps = jdbcUtility.getpsDeactivateRoomByID();
+                
+            }
+            else if(activated == 0){
+                ps = jdbcUtility.getpsActivateRoomByID();
+                
+            }
+            ps.setInt(1, rID);
+            int activationStatus = ps.executeUpdate();
+
+
+          if(activationStatus == 1){
+               PrintWriter out = response.getWriter();
+               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Change room activation success.");
+//               response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid="+cID);
            }
-           
-            for(int i=0; i <collegeList.size();i++){
-                ps = jdbcUtility.getpsSelectAllRoom();
-                rs = ps.executeQuery(); 
-                totalAvailable = 0;
-                while(rs.next()){
-                   if(rs.getInt(3) == collegeList.get(i).getCollegeID() && rs.getInt("activated")==1){
-                       totalAvailable += (rs.getInt(7)-rs.getInt(8));
-                   }
-               }         
-               collegeList.get(i).setTotalAvailable(totalAvailable);
-           }
-                      
-           request.setAttribute("data",collegeList);
-           
-           RequestDispatcher rd = request.getRequestDispatcher("/studentSelectCollege.jsp");
-           rd.forward(request, response); 
-           
-           response.sendRedirect(request.getContextPath() + "/studentSelectCollege.jsp");
+
+           else
+             response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?message=Change room activation failed.");
+
         } catch (SQLException ex) {
             //failed
             while (ex != null) {
@@ -117,9 +109,8 @@ public class StudentSelectCollegeServlet extends HttpServlet {
                 ex = ex.getNextException ();
 		System.out.println ("");
             }
-            response.sendRedirect(request.getContextPath() + "/studentHome.jsp?message=Faileddd");
+            response.sendRedirect(request.getContextPath() + "/AdminSelectRoomByIDServlet?cid=" + cID + "&success=Delete room fail.");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
